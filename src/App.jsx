@@ -3,6 +3,8 @@ import MainTemplate from './components/MainTemplate';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Result from './pages/Result';
+import DictionaryPage from './pages/dictionary/DictionaryPage';
+
 
 export default function App() {
     return (
@@ -12,6 +14,7 @@ export default function App() {
                     <Route index element={<Home />} />
                     <Route path="quiz/:id" element={<Quiz />} />
                     <Route path="result" element={<Result />} />
+                    <Route path="/dictionary" element={<DictionaryPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
