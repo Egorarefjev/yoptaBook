@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/ui/input/Input';
-import apiRequest from '../../api/index';
+import { apiRequest } from '../../api/index';
+import { API_ENDPOINTS } from '../../api/endpoints';
 
 export default function Login() {
-
-    const ENDPOINT_NAME_FOR_LOGIN = '/register';
-    const ENDPOINT_NAME_FOR_REGISTER = '/register';
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +27,7 @@ export default function Login() {
 
     async function onLogin() {
         try {
-            const data = await apiRequest(ENDPOINT_NAME_FOR_LOGIN, 'POST', { login, password });
+            const data = await apiRequest(API_ENDPOINTS.LOGIN, 'POST', { login, password });
             console.log(data.message);
         }  catch (e) {
             if (e instanceof Error) {
@@ -42,7 +40,7 @@ export default function Login() {
 
     async function onCreateAccount() {
         try {
-            const data = await apiRequest(ENDPOINT_NAME_FOR_REGISTER, 'POST', { login, password });
+            const data = await apiRequest(API_ENDPOINTS.REGISTER, 'POST', { login, password });
             console.log(data.message);
         }  catch (e) {
             if (e instanceof Error) {
