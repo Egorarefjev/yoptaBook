@@ -1,10 +1,10 @@
-export default function Input({type, onChangeAction}) {
+export default function Input({type, onChange}) {
 
     let inputType = type ?? 'text;'
 
     return (
         <div>
-            <input type={inputType} onChange={onChangeAction}/>
+            <input type={inputType} onChange={onChange}/>
         </div>
     )
 }

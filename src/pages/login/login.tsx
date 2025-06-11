@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import Button from '/src/components/ui/button/Button';
-import Input from '/src/components/ui/input/Input';
+import Button from '../../components/ui/button/Button';
+import Input from '../../components/ui/input/Input';
+import apiRequest from '../../api/index';
 
 export default function Login() {
+
+    const ENDPOINT_NAME_FOR_LOGIN = '/register';
+    const ENDPOINT_NAME_FOR_REGISTER = '/register';
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -23,12 +27,30 @@ export default function Login() {
         setIsSignUp((prev) => !prev);
     }
 
-    function onCreateAccount() {
-        console.log(`Аккаунт: ${login} создан`);
+    async function onLogin() {
+        try {
+            const data = await apiRequest(ENDPOINT_NAME_FOR_LOGIN, 'POST', { login, password });
+            console.log(data.message);
+        }  catch (e) {
+            if (e instanceof Error) {
+                console.error(e.message);
+            } else {
+                console.error('Unknown error', e);
+            }
+        }
     }
 
-    function onLogin() {
-        console.log(`Попытка входа в аккаунт: ${login}`);
+    async function onCreateAccount() {
+        try {
+            const data = await apiRequest(ENDPOINT_NAME_FOR_REGISTER, 'POST', { login, password });
+            console.log(data.message);
+        }  catch (e) {
+            if (e instanceof Error) {
+                console.error(e.message);
+            } else {
+                console.error('Unknown error', e);
+            }
+        }
     }
 
     return (
@@ -58,8 +80,8 @@ export default function Login() {
                 }
             </div>
             <div>
-                <Input onChangeAction={onChangeLogin}/>
-                <Input type='password'/>
+                <Input onChange={onChangeLogin} type='text'/>
+                <Input onChange={onChangePassword} type='password'/>
             </div>
             <div>
                 { isSignUp ?
