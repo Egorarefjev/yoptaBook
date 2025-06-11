@@ -1,0 +1,15 @@
+.button {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  padding: var(--spacer-sm);
+  width: max-content;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+
+  }
+}

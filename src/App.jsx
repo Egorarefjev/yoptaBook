@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainTemplate from './components/MainTemplate';
 import Home from './pages/Home';
-import Quiz from './pages/Quiz';
 import Result from './pages/Result';
 import DictionaryPage from './pages/dictionary/DictionaryPage';
 
@@ -12,7 +11,6 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<MainTemplate />}>
                     <Route index element={<Home />} />
-                    <Route path="quiz/:id" element={<Quiz />} />
                     <Route path="result" element={<Result />} />
                     <Route path="/dictionary" element={<DictionaryPage />} />
                 </Route>
