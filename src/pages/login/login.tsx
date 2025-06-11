@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from '/src/components/ui/button/Button';
-import Input from '/src/components/ui/input/Input'
+import Input from '/src/components/ui/input/Input';
 
 export default function Login() {
 
