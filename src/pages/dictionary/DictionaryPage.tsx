@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { addWord, removeWord } from './dictionarySlice';
 import styles from './dictionary.module.scss';
+import Button from '/src/components/ui/button/Button';
 
 export default function DictionaryPage() {
 
@@ -24,10 +25,10 @@ export default function DictionaryPage() {
     };
 
     return (
-        <div>
-            <h2>Словарь</h2>
+        <div className="container">
+            <div className="title title--h2">Словарь</div>
 
-            <button onClick={handleAddWord}>Добавить слово (тест)</button>
+            <Button text='Сохранить слово' />
 
             <div className={styles.test}>
 
