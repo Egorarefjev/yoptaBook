@@ -28,7 +28,6 @@ export default function Login() {
     async function onLogin() {
         try {
             const data = await apiRequest(API_ENDPOINTS.LOGIN, 'POST', { login, password });
-            console.log(data.message);
         }  catch (e) {
             if (e instanceof Error) {
                 console.error(e.message);
@@ -41,7 +40,6 @@ export default function Login() {
     async function onCreateAccount() {
         try {
             const data = await apiRequest(API_ENDPOINTS.REGISTER, 'POST', { login, password });
-            console.log(data.message);
         }  catch (e) {
             if (e instanceof Error) {
                 console.error(e.message);
