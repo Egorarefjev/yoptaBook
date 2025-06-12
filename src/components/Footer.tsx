@@ -1,7 +1,9 @@
 export default function Footer() {
+    const currentYear = new Date().getFullYear();
+
     return (
         <footer className="footer">
-            <p>© 2025 React Квиз</p>
+            <p>© {currentYear} Yopta Book </p>
         </footer>
     );
 }
