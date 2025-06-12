@@ -32,6 +32,7 @@
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
+  --font-weight-semibold: 500;
   --font-weight-bold: 700;
 }
 
@@ -68,6 +69,16 @@ body {
   padding: var(--spacer-md);
 }
 
+/* Утилиты отступов: margin-bottom */
+.mb-xxs  { margin-bottom: var(--spacer-xxs); }
+.mb-xs   { margin-bottom: var(--spacer-xs); }
+.mb-sm   { margin-bottom: var(--spacer-sm); }
+.mb-md   { margin-bottom: var(--spacer-md); }
+.mb-lg   { margin-bottom: var(--spacer-lg); }
+.mb-xl   { margin-bottom: var(--spacer-xl); }
+.mb-xxl  { margin-bottom: var(--spacer-xxl); }
+
+
 @media (max-width: 768px) {
   .container {
     padding: var(--spacer-sm);
@@ -84,6 +95,7 @@ body {
 .main-template__content {
   flex: 1;
   padding: 1rem;
+  background-color: var(--color-background);
 }
 
 .header, .footer {
@@ -91,3 +103,4 @@ body {
   padding: 1rem;
   text-align: center;
 }
+

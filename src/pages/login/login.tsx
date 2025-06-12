@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/ui/input/Input';
+import styles from './login.module.scss';
 import { apiRequest } from '../../api/index';
 import { API_ENDPOINTS } from '../../api/endpoints';
 
@@ -50,15 +51,15 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <div>Добро пожаловать в супер удобный инструмент</div>
-            <div>
+        <div className={`${styles.wrapper} container`}>
+            <div className={styles.title}>Добро пожаловать!</div>
+            <div className='mb-md'>
                 {isSignUp ?
                     (
                         <div>
-                            <div>Регистрация</div>
+                            <div className={`${styles.subtitle} mb-md`}>Регистрация</div>
 
-                            <p>
+                            <p className={styles.text}>
                                 Если у вас нет аккаунта, то создайте его,
                                 но запишите пароль потому что функцию восстановления мне делать лень пока что
                             </p>
@@ -66,8 +67,8 @@ export default function Login() {
 
                     ) : (
                         <div>
-                            <div>Вход</div>
-                            <p>
+                            <div className={styles.subtitle}>Вход</div>
+                            <p className={styles.text}>
                                 Для входа в акк, введите логин и пароль
                             </p>
                         </div>
@@ -75,11 +76,11 @@ export default function Login() {
                     )
                 }
             </div>
-            <div>
+            <div className='mb-md'>
                 <Input onChange={onChangeLogin} type='text'/>
                 <Input onChange={onChangePassword} type='password'/>
             </div>
-            <div>
+            <div className={styles.buttons}>
                 { isSignUp ?
                     (<Button onClick={onChangeTypeLogin}>Есть аккаунт</Button>)
                     : (<Button onClick={onLogin}>Войти</Button>)
