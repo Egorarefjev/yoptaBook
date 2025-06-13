@@ -1,20 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { appRoutes } from './routes/routes';
 import MainTemplate from './components/MainTemplate';
-import Result from './pages/Result';
-import DictionaryPage from './pages/dictionary/DictionaryPage';
-import Login from "./pages/login/login";
-
 
 export default function App() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<MainTemplate />}>
-                    <Route index element={<Login />} />
-                    <Route path="result" element={<Result />} />
-                    <Route path="/dictionary" element={<DictionaryPage />} />
-                </Route>
-            </Routes>
+            <MainTemplate>
+                <Routes>
+                    {appRoutes.map(({ path, element }) => (
+                        <Route key={path} path={path} element={element} />
+                    ))}
+
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </MainTemplate>
         </BrowserRouter>
     );
 }
