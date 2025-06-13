@@ -1,9 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { addWord, removeWord } from './dictionarySlice';
 import styles from './dictionary.module.scss';
-import Button from '/src/components/ui/button/Button';
+import Button from '../../components/ui/button/Button';
+import useAuth from '../../hooks/useAuth';
 
 export default function DictionaryPage() {
+
+    const { logout } = useAuth();
 
     const words = useSelector((state) => state.dictionary?.words);
     const dispatch = useDispatch();
@@ -28,10 +31,8 @@ export default function DictionaryPage() {
         <div className="container">
             <div className="title title--h2">Словарь</div>
 
-            <Button text='Сохранить слово' />
-
             <div className={styles.test}>
-
+                <Button onClick={logout} >Выйти из этой крыселовки</Button>
             </div>
         </div>
     );
