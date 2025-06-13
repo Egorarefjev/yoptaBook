@@ -2,95 +2,75 @@ import { useState } from 'react';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/ui/input/Input';
 import styles from './login.module.scss';
-import { apiRequest } from '../../api/index';
-import { API_ENDPOINTS } from '../../api/endpoints';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
-
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
+    const [loginInput, setLoginInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
     const [isSignUp, setIsSignUp] = useState(false);
 
-    function onChangeLogin(e) {
-        setLogin(e.target.value);
+    const { login, register } = useAuth();
+
+    function resetForm() {
+        setLoginInput('');
+        setPasswordInput('');
     }
 
-    function onChangePassword(e) {
-        setPassword(e.target.value);
+    function toggleMode() {
+        resetForm();
+        setIsSignUp(prev => !prev);
     }
 
-    function onChangeTypeLogin() {
-        setLogin('');
-        setPassword('');
-
-        setIsSignUp((prev) => !prev);
-    }
-
-    async function onLogin() {
+    async function handleSubmit() {
         try {
-            const data = await apiRequest(API_ENDPOINTS.LOGIN, 'POST', { login, password });
-        }  catch (e) {
-            if (e instanceof Error) {
-                console.error(e.message);
+            if (isSignUp) {
+                await register(loginInput, passwordInput);
             } else {
-                console.error('Unknown error', e);
+                await login(loginInput, passwordInput);
             }
-        }
-    }
-
-    async function onCreateAccount() {
-        try {
-            const data = await apiRequest(API_ENDPOINTS.REGISTER, 'POST', { login, password });
-        }  catch (e) {
-            if (e instanceof Error) {
-                console.error(e.message);
-            } else {
-                console.error('Unknown error', e);
-            }
+        } catch (e) {
+            console.error('Ошибка входа/регистрации:', e?.message || e);
         }
     }
 
     return (
         <div className={`${styles.wrapper} container`}>
             <div className={styles.title}>Добро пожаловать!</div>
-            <div className='mb-md'>
-                {isSignUp ?
-                    (
-                        <div>
-                            <div className={`${styles.subtitle} mb-md`}>Регистрация</div>
 
-                            <p className={styles.text}>
-                                Если у вас нет аккаунта, то создайте его,
-                                но запишите пароль потому что функцию восстановления мне делать лень пока что
-                            </p>
-                        </div>
-
-                    ) : (
-                        <div>
-                            <div className={styles.subtitle}>Вход</div>
-                            <p className={styles.text}>
-                                Для входа в акк, введите логин и пароль
-                            </p>
-                        </div>
-
-                    )
-                }
+            <div className="mb-md">
+                <div className={`${styles.subtitle} mb-md`}>
+                    {isSignUp ? 'Регистрация' : 'Вход'}
+                </div>
+                <p className={styles.text}>
+                    {isSignUp
+                        ? 'Если у вас нет аккаунта, создайте его. Только не забудьте пароль.'
+                        : 'Для входа в аккаунт введите логин и пароль.'}
+                </p>
             </div>
-            <div className='mb-md'>
-                <Input onChange={onChangeLogin} type='text'/>
-                <Input onChange={onChangePassword} type='password'/>
+
+            <div className="mb-md">
+                <Input
+                    placeholder="Логин"
+                    type="text"
+                    value={loginInput}
+                    onChange={e => setLoginInput(e.target.value)}
+                />
+                <Input
+                    placeholder="Пароль"
+                    type="password"
+                    value={passwordInput}
+                    onChange={e => setPasswordInput(e.target.value)}
+                />
             </div>
+
             <div className={styles.buttons}>
-                { isSignUp ?
-                    (<Button onClick={onChangeTypeLogin}>Есть аккаунт</Button>)
-                    : (<Button onClick={onLogin}>Войти</Button>)
-                }
-
-                { isSignUp ?
-                    (<Button onClick={onCreateAccount}>Создать аккаунт</Button>)
-                    : (<Button onClick={onChangeTypeLogin}>Зарегистрироваться</Button>)
-                }
+                <Button onClick={toggleMode}>
+                    {isSignUp ? 'Есть аккаунт' : 'Зарегистрироваться'}
+                </Button>
+                <Button onClick={handleSubmit}>
+                    {isSignUp ? 'Создать аккаунт' : 'Войти'}
+                </Button>
             </div>
         </div>
-    )
+    );
 }
