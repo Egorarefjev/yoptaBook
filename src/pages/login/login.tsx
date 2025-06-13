@@ -29,7 +29,11 @@ export default function Login() {
                 await login(loginInput, passwordInput);
             }
         } catch (e) {
-            console.error('Ошибка входа/регистрации:', e?.message || e);
+            if (e instanceof Error) {
+                console.error('Ошибка входа/регистрации:', e.message);
+            } else {
+                console.error('Неизвестная ошибка входа/регистрации:', e);
+            }
         }
     }
 
