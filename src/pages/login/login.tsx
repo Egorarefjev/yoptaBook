@@ -54,6 +54,7 @@ export default function Login() {
 
             <div className="mb-md">
                 <Input
+                    className='mb-sm'
                     placeholder="Логин"
                     type="text"
                     value={loginInput}
