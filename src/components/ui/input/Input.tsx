@@ -1,13 +1,14 @@
-export default function Input({type, placeholder, value, onChange}) {
+import styles from './input.module.scss';
 
-    let inputType = type ?? 'text;'
+export default function Input({type = 'text', placeholder = '', value = '', className= '', onChange}) {
 
     return (
-        <div>
+        <div className={className}>
             <input
-                type={inputType}
+                type={type}
                 onChange={onChange}
                 placeholder={placeholder}
+                className={styles.input}
                 value={value}/>
         </div>
     )

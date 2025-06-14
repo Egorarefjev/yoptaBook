@@ -1,0 +1,20 @@
+.input {
+  width: 100%;
+  padding: var(--spacer-sm) var(--spacer-md);
+  font-size: var(--font-size-md);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  background-color: #fff;
+  color: var(--color-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(186, 61, 106, 0.2); // color-accent с прозрачностью
+  }
+}
