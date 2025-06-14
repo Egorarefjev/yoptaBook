@@ -11,7 +11,6 @@ export default function AddWordForm(
         descriptionValue,
     })
 {
-
     return (
         <div>
             <Input className='mb-md' value={wordValue} onChange={onChangeWord} placeholder='Слово на английском'/>
