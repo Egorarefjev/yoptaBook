@@ -1,32 +1,26 @@
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest, registerRequest, getCurrentUser } from '../api/auth';
-import { ROUTES } from "../routes/constants.js";
+import { ROUTES } from '../routes/constants';
 
 const TOKEN_KEY = 'auth_token';
 
-function saveToken(token) {
-    localStorage.setItem(TOKEN_KEY, token);
-}
+const AuthContext = createContext();
 
-function getToken() {
-    return localStorage.getItem(TOKEN_KEY);
-}
-
-function removeToken() {
-    localStorage.removeItem(TOKEN_KEY);
-}
-
-export default function useAuth() {
+export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    const saveToken = (token) => localStorage.setItem(TOKEN_KEY, token);
+    const getToken = () => localStorage.getItem(TOKEN_KEY);
+    const removeToken = () => localStorage.removeItem(TOKEN_KEY);
 
     async function login(login, password) {
         const res = await loginRequest(login, password);
         saveToken(res.token);
         setUser(res.user);
-        navigate(ROUTES.DICTIONARY); // 👉 переадресация после логина
+        navigate(ROUTES.DICTIONARY);
     }
 
     async function register(login, password) {
@@ -44,8 +38,8 @@ export default function useAuth() {
 
     async function checkAuth() {
         try {
-            const user = await getCurrentUser();
-            setUser(user.user);
+            const res = await getCurrentUser();
+            setUser(res.user);
         } catch {
             removeToken();
             setUser(null);
@@ -62,12 +56,23 @@ export default function useAuth() {
         }
     }, []);
 
-    return {
-        user,
-        isAuth: !!user,
-        loading,
-        login,
-        register,
-        logout,
-    };
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                token: getToken(),
+                isAuth: !!user,
+                loading,
+                login,
+                register,
+                logout
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+export function useAuth() {
+    return useContext(AuthContext);
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/ui/input/Input';
 import styles from './login.module.scss';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
     const [loginInput, setLoginInput] = useState('');
