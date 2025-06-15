@@ -67,10 +67,10 @@ export default function DictionaryPage() {
                 {words?.map((word) => (
                     <ShowWordForm
                         key={word.id}
-                        id={word.id}
                         word={word.word}
                         translation={word.translation}
                         description={word.description}
+                        deleteWord={() => deleteWord(word.id)}
                     />
                 ))}
             </div>

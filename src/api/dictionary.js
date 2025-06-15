@@ -6,7 +6,7 @@ export function apiCreateWord(word, translation, description) {
 }
 
 export function apiDeleteWord(id) {
-    return apiRequest(API_ENDPOINTS.WORDS, 'DELETE', { id });
+    return apiRequest(`${API_ENDPOINTS.WORDS}/${id}`, 'DELETE');
 }
 
 export function apiGetWords() {

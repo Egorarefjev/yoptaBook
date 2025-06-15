@@ -1,0 +1,11 @@
+.footer{
+  background: var(--color-secondary);
+  padding: var(--spacer-md);
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}

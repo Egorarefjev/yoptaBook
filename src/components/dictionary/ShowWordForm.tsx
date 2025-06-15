@@ -1,10 +1,10 @@
 import styles from './showWordForm.module.scss'
 
 export default function showWordForm({
-    id,
     word,
     translation,
     description,
+    deleteWord
 }) {
     return (
         <div className={styles['word-card']}>
@@ -13,6 +13,8 @@ export default function showWordForm({
                 <span className={styles['word__translation']}>({translation})</span>
             </div>
             {description && <p className={styles['word__description']}>{description}</p>}
+
+            <div onClick={deleteWord} className={styles['close-button']}>X</div>
         </div>
     );
 }
