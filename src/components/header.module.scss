@@ -1,0 +1,10 @@
+.header{
+  background: var(--color-secondary);
+  padding: var(--spacer-md);
+  text-align: center;
+  color: var(--color-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}

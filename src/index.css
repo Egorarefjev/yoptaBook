@@ -98,9 +98,5 @@ body {
   background-color: var(--color-background);
 }
 
-.header, .footer {
-  background: #f0f0f0;
-  padding: 1rem;
-  text-align: center;
-}
+
 

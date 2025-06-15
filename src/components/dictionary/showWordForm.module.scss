@@ -1,5 +1,6 @@
 .word {
   &-card {
+    position: relative;
     background-color: var(--color-background);
     border: 1px solid var(--color-secondary);
     border-radius: var(--radius-md);
@@ -38,4 +39,20 @@
       color: var(--color-text);
       margin-top: var(--spacer-xs);
     }
+}
+
+.close-button {
+  position: absolute;
+  top: var(--spacer-sm);
+  right: var(--spacer-sm);
+  color: var(--color-accent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  &:hover {
+    cursor: pointer;
+    color: var(--color-danger);
+  }
 }
