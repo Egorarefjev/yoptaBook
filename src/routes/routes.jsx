@@ -1,6 +1,7 @@
 import Login from '../pages/login/Login';
 import DictionaryPage from '../pages/dictionary/DictionaryPage';
 import Result from '../pages/Result';
+import About from "../pages/about/About.js";
 
 import PrivateRoute from '../components/routes/PrivateRoute';
 import PublicRoute from '../components/routes/PublicRoute';
@@ -20,6 +21,14 @@ export const appRoutes = [
         element: (
             <PrivateRoute>
                 <DictionaryPage />
+            </PrivateRoute>
+        ),
+    },
+    {
+        path: ROUTES.ABOUT,
+        element: (
+            <PrivateRoute>
+                <About />
             </PrivateRoute>
         ),
     },
