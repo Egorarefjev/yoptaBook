@@ -8,3 +8,9 @@
   align-items: center;
   height: 80px;
 }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacer-lg);
+}
