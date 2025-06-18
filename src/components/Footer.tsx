@@ -5,7 +5,7 @@ export default function Footer() {
 
     return (
         <footer className={styles.footer}>
-            <p>© {currentYear} Yopta Book </p>
+            <div>© {currentYear} Yopta Book </div>
         </footer>
     );
 }

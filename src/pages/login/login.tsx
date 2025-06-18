@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/ui/input/Input';
+import UiError from '../../components/ui/Error/Error';
 import styles from './login.module.scss';
 import { useAuth } from '../../context/AuthContext';
 
@@ -8,6 +9,8 @@ export default function Login() {
     const [loginInput, setLoginInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [isSignUp, setIsSignUp] = useState(false);
+    const [errors, setErrors] = useState<string[]>([]);
+
 
     const { login, register } = useAuth();
 
@@ -21,15 +24,20 @@ export default function Login() {
         setIsSignUp(prev => !prev);
     }
 
-    async function handleSubmit() {
+    async function handleSubmit(): Promise<void> {
+        setErrors([]);
         try {
             if (isSignUp) {
                 await register(loginInput, passwordInput);
             } else {
                 await login(loginInput, passwordInput);
             }
+
+            setErrors([]);
         } catch (e) {
             if (e instanceof Error) {
+                const errorMessage = (e as Error).message;
+                setErrors(prev => [...prev, errorMessage]);
                 console.error('Ошибка входа/регистрации:', e.message);
             } else {
                 console.error('Неизвестная ошибка входа/регистрации:', e);
@@ -75,6 +83,15 @@ export default function Login() {
                 <Button onClick={handleSubmit}>
                     {isSignUp ? 'Создать аккаунт' : 'Войти'}
                 </Button>
+            </div>
+            <div>
+                {errors.length > 0 && (
+                    <div className={`${styles.errors} mb-sm`}>
+                        {errors.map((textError, i) => (
+                            <UiError key={i} textError={textError} className='mb-sm' />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

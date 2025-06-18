@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <Link to='/'>
-                <img src="public/svg/logo.svg" alt=""/>
+                <img src="svg/logo.svg" alt=""/>
             </Link>
             {isAuth &&
                 <div className={styles.links}>
