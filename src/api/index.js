@@ -10,6 +10,7 @@ export async function apiRequest(endpoint, method = 'GET', body) {
     const options = {
         method,
         headers,
+        credentials: 'include',
     };
 
     if (body) {
@@ -17,7 +18,12 @@ export async function apiRequest(endpoint, method = 'GET', body) {
     }
 
     const response = await fetch(`${API_URL}${endpoint}`, options);
-    if (!response.ok) throw new Error('Ошибка: ' + response.status);
+
+    if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        const errorMessage = errorBody?.message || 'Ошибка: ' + response.status;
+        throw new Error(errorMessage);
+    }
 
     return response.json();
 }
