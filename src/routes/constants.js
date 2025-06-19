@@ -2,5 +2,6 @@ export const ROUTES = {
     LOGIN: '/',
     DICTIONARY: '/dictionary',
     RESULT: '/result',
-    ABOUT: '/about'
+    ABOUT: '/about',
+    TRANSLATOR: '/translator'
 };
