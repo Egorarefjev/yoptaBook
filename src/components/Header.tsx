@@ -15,6 +15,7 @@ export default function Header() {
             </Link>
             {isAuth &&
                 <div className={styles.links}>
+                    <Link to={ ROUTES.TRANSLATOR }>Переводчик</Link>
                     <Link to={ ROUTES.DICTIONARY }>Словарь</Link>
                     <Link to={ ROUTES.ABOUT }>О проекте</Link>
                 </div>}
