@@ -1,22 +1,21 @@
 const CACHE_NAME = 'yopta-static-v1';
 const API_CACHE = 'yopta-api-v1';
-const FILES_TO_CACHE = [
+
+const FILES_TO_PRECACHE = [
     '/',
-    '/dictionary',
     '/index.html',
-    '/svg/logo.svg',
-    '/styles.css',
-    '/main.js',
+    '/favicon.svg',
 ];
 
-// Установка
+// Установка: базовые файлы
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+        caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_PRECACHE))
     );
+    self.skipWaiting();
 });
 
-// Активация
+// Активация: удаление старого кеша
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(keys =>
@@ -25,18 +24,29 @@ self.addEventListener('activate', event => {
             )
         )
     );
+    self.clients.claim();
 });
 
 // Перехват запросов
 self.addEventListener('fetch', event => {
     const { request } = event;
 
-    // 🎯 Обрабатываем запрос к API словаря
+    // Не обрабатываем preflight
+    if (request.method === 'OPTIONS') return;
+
+    // Обработка SPA-роутинга
+    if (request.mode === 'navigate') {
+        event.respondWith(
+            caches.match('/index.html').then(response => response || fetch('/index.html'))
+        );
+        return;
+    }
+
+    // Обработка API /api/dictionary
     if (request.url.includes('/api/dictionary')) {
         event.respondWith(
             fetch(request)
                 .then(response => {
-                    // Клонируем и кешируем ответ
                     const cloned = response.clone();
                     caches.open(API_CACHE).then(cache => cache.put(request, cloned));
                     return response;
@@ -46,12 +56,23 @@ self.addEventListener('fetch', event => {
         return;
     }
 
-    // 🧱 Остальное — кеш статики
+    // Обработка статики (кеш на лету)
     event.respondWith(
-        caches.match(request).then(resp =>
-                resp || fetch(request).catch(() =>
-                    new Response('Нет интернета', { headers: { 'Content-Type': 'text/plain' } })
-                )
-        )
+        caches.match(request).then(cachedResponse => {
+            if (cachedResponse) return cachedResponse;
+
+            return fetch(request)
+                .then(networkResponse => {
+                    return caches.open(CACHE_NAME).then(cache => {
+                        cache.put(request, networkResponse.clone());
+                        return networkResponse;
+                    });
+                })
+                .catch(() =>
+                    new Response('Нет интернета', {
+                        headers: { 'Content-Type': 'text/plain' }
+                    })
+                );
+        })
     );
 });
