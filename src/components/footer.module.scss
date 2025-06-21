@@ -1,9 +1,12 @@
 .footer{
-  background: var(--color-secondary);
+  background: rgba(155, 161, 171, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   padding: var(--spacer-md);
-  color: var(--color-accent);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-lg);
+  text-align: center;
+  color: var(--color-text);
   display: flex;
   justify-content: center;
   align-items: center;

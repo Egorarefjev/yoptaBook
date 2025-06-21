@@ -1,12 +1,23 @@
 :root {
-  --color-primary: #D7AAAE;
-  --color-secondary: #9BA1AB;
-  --color-accent: #BA3D6A;
-  --color-background: #FAFCF4;
-  --color-heading: #2C2137;
-  --color-text: #2C2137;
-  --color-success: #27ae60;
-  --color-danger: #e74c3c;
+  /* Основные цвета */
+  --color-primary: #6366f1;
+  --color-secondary: #94a3b8;
+  --color-accent: #f43f5e;
+
+  /* Фон и текст */
+  --color-background: #f8fafc;
+  --color-heading: #0f172a;
+  --color-text: #334155;
+
+  /* Статусы */
+  --color-success: #10b981;       /* Современный зелёный, без кислотности */
+  --color-danger: #ef4444;        /* Ярко-красный, но без агрессии */
+
+  /* Дополнительно */
+  --color-border: #e2e8f0;
+  --color-muted: #64748b;
+  --color-hover: #e0e7ff;
+
 
   --spacer-xxs: 0.25rem;
   --spacer-xs: 0.5rem;
@@ -59,6 +70,24 @@ body {
   line-height: 1.5;
   background: #f9f9f9;
   color: #333;
+}
+
+.link__active {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+  position: relative;
+}
+
+.link__active::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
 }
 
 /* Параграфы */
