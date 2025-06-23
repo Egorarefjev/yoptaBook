@@ -74,3 +74,8 @@ backend/
 
 - Telegram: [@EgorArefjev](https://t.me/EgorArefjev)
 - GitHub: [Egorarefjev](https://github.com/Egorarefjev)
+
+## License
+This project is licensed under the [CC BY-NC 4.0](http://creativecommons.org/licenses/by-nc/4.0/) License.
+© 2025 Egor Arefjev
+
