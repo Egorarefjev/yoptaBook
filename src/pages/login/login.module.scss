@@ -80,6 +80,13 @@
   font-size: var(--font-size-sm);
 }
 
+.loaderContainer {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 480px) {
   .wrapper {
     width: 100vw;

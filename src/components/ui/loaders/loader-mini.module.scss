@@ -1,0 +1,56 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+
+.gegga {
+  width: 0;
+}
+
+.snurra {
+  filter: url(#gegga);
+}
+
+.stop1 {
+  stop-color: var(--color-accent);
+}
+
+.stop2 {
+  stop-color: var(--color-primary);
+}
+
+.halvan {
+  animation: spin 10s linear infinite;
+  stroke-dasharray: 180 800;
+  fill: none;
+  stroke: url(#gradient);
+  stroke-width: 20;
+  stroke-linecap: round;
+}
+
+.strecken {
+  animation: spin 3s linear infinite;
+  stroke-dasharray: 26 54;
+  fill: none;
+  stroke: url(#gradient);
+  stroke-width: 20;
+  stroke-linecap: round;
+}
+
+.skugga {
+  position: absolute;
+  transform: translate(3px, 3px);
+}
+
+@keyframes spin {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -403px;
+  }
+}
