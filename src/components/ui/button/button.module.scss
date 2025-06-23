@@ -8,6 +8,9 @@ button {
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  gap: var(--spacer-sm);
+  align-items: center;
 }
 
 button:hover {
@@ -21,6 +24,9 @@ button:active {
 }
 
 button:disabled {
-  opacity: 0.5;
+  background-color: var(--color-secondary);
   cursor: not-allowed;
+  &:hover {
+    background-color: var(--color-secondary);
+  }
 }

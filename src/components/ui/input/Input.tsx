@@ -1,6 +1,12 @@
 import styles from './input.module.scss';
 
-export default function Input({type = 'text', placeholder = '', value = '', className= '', onChange}) {
+export default function Input({
+                                  type = 'text',
+                                  placeholder = '',
+                                  value = '',
+                                  className= '',
+                                  onChange,
+                                  disabled = false}) {
 
     return (
         <div className={className}>
@@ -9,7 +15,8 @@ export default function Input({type = 'text', placeholder = '', value = '', clas
                 onChange={onChange}
                 placeholder={placeholder}
                 className={styles.input}
-                value={value}/>
+                value={value}
+                disabled={disabled}/>
         </div>
     )
 }

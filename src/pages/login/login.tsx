@@ -10,6 +10,7 @@ export default function Login() {
     const [passwordInput, setPasswordInput] = useState('');
     const [isSignUp, setIsSignUp] = useState(false);
     const [errors, setErrors] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
 
     const { login, register } = useAuth();
@@ -26,14 +27,13 @@ export default function Login() {
 
     async function handleSubmit(): Promise<void> {
         setErrors([]);
+        setLoading(true);
         try {
             if (isSignUp) {
                 await register(loginInput, passwordInput);
             } else {
                 await login(loginInput, passwordInput);
             }
-
-            setErrors([]);
         } catch (e) {
             if (e instanceof Error) {
                 const errorMessage = (e as Error).message;
@@ -43,6 +43,7 @@ export default function Login() {
                 console.error('Неизвестная ошибка входа/регистрации:', e);
             }
         }
+        setLoading(false);
     }
 
     return (
@@ -66,12 +67,14 @@ export default function Login() {
                     placeholder="Логин"
                     type="text"
                     value={loginInput}
+                    disabled={loading}
                     onChange={e => setLoginInput(e.target.value)}
                 />
                 <Input
                     placeholder="Пароль"
                     type="password"
                     value={passwordInput}
+                    disabled={loading}
                     onChange={e => setPasswordInput(e.target.value)}
                 />
             </div>
@@ -80,7 +83,7 @@ export default function Login() {
                 <Button onClick={toggleMode}>
                     {isSignUp ? 'Есть аккаунт' : 'Зарегистрироваться'}
                 </Button>
-                <Button onClick={handleSubmit}>
+                <Button onClick={handleSubmit} disabled={loading} loading={loading}>
                     {isSignUp ? 'Создать аккаунт' : 'Войти'}
                 </Button>
             </div>

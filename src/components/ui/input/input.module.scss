@@ -17,4 +17,11 @@
     border-color: var(--color-primary);
     box-shadow: 0 0 0 2px rgba(186, 61, 106, 0.2); // color-accent с прозрачностью
   }
+
+  &:disabled {
+    opacity: 0.4;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
 }
