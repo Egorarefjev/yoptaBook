@@ -1,20 +1,26 @@
 import Input from "../ui/input/Input";
 import ShowWordForm from "../dictionary/ShowWordForm";
+import Select from "../ui/select/Select";
+import styles from './TranslatorForm.module.scss';
 
-export default function TranslatorForm({onChange, word, translations}) {
+export default function TranslatorForm({onChange, onChangeSelect, word, languagesList, selectedLanguage}) {
+
+
     return (
         <div>
             <Input
                 value={word}
-                placeholder='Введите слово на русском'
+                placeholder='Введите слово'
                 className='mb-sm'
-                onChange={onChange}/>
-
-            <div>
-                {translations.length > 0 && <div className='title title--h2'>Перевод</div>}
-                {translations?.map((translate) => ( <p>{translate}</p>))}
+                onChange={onChange}
+            />
+            <div className={styles.select}>
+                <Select
+                    options={languagesList}
+                    value={selectedLanguage}
+                    onChange={onChangeSelect}
+                />
             </div>
-
         </div>
     )
 }

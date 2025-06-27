@@ -97,11 +97,6 @@ p {
   color: var(--color-text);
 }
 
-/* Списки */
-ul, ol {
-  margin-bottom: var(--spacer-md);
-  padding-left: var(--spacer-lg);
-}
 
 ul li,
 ol li {
