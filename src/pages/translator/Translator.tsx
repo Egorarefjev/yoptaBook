@@ -2,9 +2,10 @@ import Button from "../../components/ui/button/Button";
 import TranslatorForm from "../../components/translator/TranslatorForm";
 import styles from './translator.module.scss';
 import useTranslator from '../../hooks/useTranslator';
-import { getTranslation } from '../../api/translator';
 import { LANGUAGES_LIST } from '../../helpers/consts';
 import LoaderMini from "../../components/ui/loaders/LoaderMini";
+import { NotificationService } from '../../services/notificationService';
+
 
 export default function Translator() {
 
@@ -18,6 +19,17 @@ export default function Translator() {
         translate,
         saveWord
     } = useTranslator();
+
+    const handleSave = async () => {
+        try {
+            await saveWord();
+            NotificationService.notify(`Слово "${word}" добавлено!`, 'success');
+        } catch (e) {
+            NotificationService.notify('Не удалось сохранить слово', 'error');
+        }
+    };
+
+
 
     return (
         <div className="container">
@@ -46,8 +58,8 @@ export default function Translator() {
             </div>
 
             <div className={styles.buttons}>
-                <Button onClick={saveWord}>Сохранить в словарь</Button>
-                <Button onClick={translate}>Перевести</Button>
+                <Button onClick={handleSave}>Сохранить в словарь</Button>
+                <Button onClick={translate} loading={loading}>Перевести</Button>
             </div>
         </div>
     )

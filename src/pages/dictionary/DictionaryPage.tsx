@@ -4,6 +4,7 @@ import Button from "../../components/ui/button/Button";
 import { useState } from 'react';
 import useDictionary from '../../hooks/useDictionary';
 import styles from './dictionary.module.scss';
+import LoaderMini from "../../components/ui/loaders/LoaderMini";
 
 export default function DictionaryPage() {
     const [wordInput, setWordInput] = useState('');
@@ -58,22 +59,24 @@ export default function DictionaryPage() {
                     <Button onClick={resetFields}>Очистить поля</Button>
                     <Button onClick={saveWord}>Добавить слово</Button>
                 </div>
-
-                {loading && <p>Загрузка...</p>}
-                {error && <p className="text-danger">Ошибка: {error}</p>}
             </div>
+            {loading && <LoaderMini />}
 
-            <div>
-                {words?.map((word) => (
-                    <ShowWordForm
-                        key={word.id}
-                        word={word.word}
-                        translation={word.translation}
-                        description={word.description}
-                        deleteWord={() => deleteWord(word.id)}
-                    />
-                ))}
-            </div>
+            {!loading && words?.length === 0 && (
+                <div className={styles.empty}>
+                    Пока слов нет. Добавь своё первое слово!
+                </div>
+            )}
+
+            {!loading && words?.length > 0 && words.map((word) => (
+                <ShowWordForm
+                    key={word.id}
+                    word={word.word}
+                    translation={word.translation}
+                    description={word.description}
+                    deleteWord={() => deleteWord(word.id)}
+                />
+            ))}
         </div>
     );
 }

@@ -1,0 +1,46 @@
+.container {
+  position: fixed;
+  bottom: var(--spacer-md);
+  left: var(--spacer-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-xs);
+  z-index: 9999;
+}
+
+.toast {
+  padding: var(--spacer-sm) var(--spacer-md);
+  border-radius: var(--radius-md);
+  background-color: var(--color-heading);
+  color: var(--color-background);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  max-width: 320px;
+  animation: slideIn 0.3s ease-out;
+  line-height: 1.4;
+  transition: opacity 0.3s ease;
+}
+
+.success {
+  background-color: var(--color-success);
+}
+
+.error {
+  background-color: var(--color-danger);
+}
+
+.info {
+  background-color: var(--color-secondary);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
