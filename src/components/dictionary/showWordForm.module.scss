@@ -54,6 +54,26 @@
   }
 }
 
+.tags {
+  margin: var(--spacer-xs) 0;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  span {
+    margin-right: var(--spacer-sm);
+  }
+}
+
+.tag {
+  background-color: var(--color-hover);
+  color: var(--color-heading);
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+}
+
+
 .close-button {
   position: absolute;
   top: var(--spacer-sm);

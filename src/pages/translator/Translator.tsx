@@ -14,6 +14,8 @@ export default function Translator() {
         setWord,
         language,
         setLanguage,
+        tags,
+        setTags,
         translations,
         loading,
         translate,
@@ -37,7 +39,9 @@ export default function Translator() {
             <TranslatorForm
                 onChange={(e) => setWord(e.target.value)}
                 onChangeSelect={(e) => setLanguage(e)}
+                onChangeTags={(e) => setTags(e)}
                 word={word}
+                tags={tags}
                 languagesList={LANGUAGES_LIST}
                 selectedLanguage={language}
             />

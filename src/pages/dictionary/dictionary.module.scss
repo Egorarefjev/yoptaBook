@@ -1,11 +1,14 @@
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}
 
 .empty {
   width: 100%;
   text-align: center;
   color: var(--color-text);
   font-size: var(--font-weight-semibold);
+}
+
+.tags {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-bottom: var(--spacer-sm);
 }
