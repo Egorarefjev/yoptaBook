@@ -3,5 +3,6 @@ export const API_ENDPOINTS = {
     REGISTER: '/register',
     DICTIONARY: '/dictionary',
     WORDS: '/words',
+    TAGS: '/words/tags',
     ME: '/me'
 };

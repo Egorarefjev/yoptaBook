@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getTranslation } from '../api/translator';
 import useDictionary from './useDictionary';
+import {parseTags} from "../utils/parseTags";
 
 const DEFAULT_LANGUAGE = 'ru-eng'
 
@@ -10,6 +11,7 @@ export default function useTranslator() {
     const [word, setWord] = useState('');
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [translations, setTranslations] = useState<string[]>([]);
+    const [tags, setTags] = useState<string>('');
     const [loading, setLoading] = useState(false);
 
     const [from, to] = language.split('-');
@@ -32,19 +34,22 @@ export default function useTranslator() {
         if (translations.length) {
             addWord({
                 word,
-                translation: translations.join(', ')
+                translation: translations.join(', '),
+                tags: parseTags(tags),
             });
         }
     }
 
     return {
         word,
+        tags,
         setWord,
         language,
         setLanguage,
         translations,
         loading,
         translate,
-        saveWord
+        saveWord,
+        setTags
     };
 }

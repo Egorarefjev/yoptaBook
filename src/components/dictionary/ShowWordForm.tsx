@@ -4,6 +4,7 @@ export default function showWordForm({
     word,
     translation,
     description,
+    tags = [],
     deleteWord
 }) {
     return (
@@ -11,6 +12,13 @@ export default function showWordForm({
             <div className={styles['word-header']}>
                 <div className={styles['word__title']}>{word}</div>
                 <span className={styles['word__translation']}>({translation})</span>
+            </div>
+            <div className={styles.tags}>
+                {tags?.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                    #{tag}
+                 </span>
+                ))}
             </div>
             {description && <p className={styles['word__description']}>{description}</p>}
 
