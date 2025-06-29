@@ -1,8 +1,22 @@
 import { SelectOptionType } from '../types/ui';
 
-export function formatArrayToOptions(tags: string[]): SelectOptionType[] {
-    return tags.map(tag => ({
-        label: tag.charAt(0).toUpperCase() + tag.slice(1),
-        value: tag
+export function formatArrayToOptions(
+    array: string[],
+    withReset: boolean = false,
+    resetText = 'Сбросить'
+): SelectOptionType[] {
+    const options = array.map(item => ({
+        label: item.charAt(0).toUpperCase() + item.slice(1),
+        value: item,
     }));
+
+    if (withReset) {
+        options.unshift({
+            value: '',
+            label: resetText,
+        });
+    }
+
+    return options;
 }
+

@@ -33,12 +33,7 @@ export default function DictionaryPage() {
         fetchTags();
     }, [words]);
 
-    const tagOptions = formatArrayToOptions(tags);
-    //TODO вынести в утилиту
-    tagOptions.push({
-        value: '',
-        label: 'Все теги'
-    })
+    const tagOptions = formatArrayToOptions(tags, true, 'Все слова');
 
 
     const resetFields = () => {
