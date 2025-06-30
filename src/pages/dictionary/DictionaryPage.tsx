@@ -61,7 +61,7 @@ export default function DictionaryPage() {
         <div className="container">
             <div className="title title--h2 mb-md">Словарь</div>
 
-            <div className="mb-lg">
+            <div className="mb-sm">
                 <p className="mb-md">
                     Тут всё просто: вводишь слово, перевод и описание, жмакаешь "Добавить слово".
                 </p>
@@ -94,6 +94,7 @@ export default function DictionaryPage() {
                     translation={word.translation}
                     description={word.description}
                     tags={word.tags}
+                    onClickTag={setSelectedTag}
                     deleteWord={() => deleteWord(word.id)}
                 />
             ))}

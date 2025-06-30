@@ -5,7 +5,8 @@ export default function showWordForm({
     translation,
     description,
     tags = [],
-    deleteWord
+    deleteWord,
+    onClickTag
 }) {
     return (
         <div className={styles['word-card']}>
@@ -15,9 +16,13 @@ export default function showWordForm({
             </div>
             <div className={styles.tags}>
                 {tags?.map((tag) => (
-                    <span key={tag} className={styles.tag}>
-                    #{tag}
-                 </span>
+                    <span
+                        key={tag}
+                        className={styles.tag}
+                        onClick={() => onClickTag(tag)}
+                    >
+                        #{tag}
+                    </span>
                 ))}
             </div>
             {description && <p className={styles['word__description']}>{description}</p>}
