@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import Input from "../ui/input/Input";
+import Input from '../ui/input/Input';
 import TextArea from '../ui/textarea/Textarea';
-import Button from "../ui/button/Button";
+import Button from '../ui/button/Button';
 import styles from './AddWordForm.module.scss';
-import { parseTags } from "../../utils/parseTags";
+import { parseTags } from '../../utils/parseTags';
+import { AddWordInput } from '../../types/words';
 
-export default function AddWordForm({ onSubmit }) {
-    const [word, setWord] = useState('');
-    const [translation, setTranslation] = useState('');
-    const [description, setDescription] = useState('');
-    const [tags, setTags] = useState('');
+interface AddWordFormProps {
+    onSubmit: (word: AddWordInput) => void;
+}
+
+export default function AddWordForm({ onSubmit }: AddWordFormProps) {
+    const [word, setWord] = useState<string>('');
+    const [translation, setTranslation] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [tags, setTags] = useState<string>('');
 
     const resetForm = () => {
         setWord('');
@@ -20,40 +25,43 @@ export default function AddWordForm({ onSubmit }) {
 
     const handleSubmit = () => {
         if (!word.trim() || !translation.trim()) return;
-        onSubmit({
+
+        const payload: AddWordInput = {
             word: word.trim(),
             translation: translation.trim(),
             description: description.trim(),
             tags: parseTags(tags),
-        });
+        };
+
+        onSubmit(payload);
         resetForm();
     };
 
     return (
         <div>
             <Input
-                className='mb-md'
+                className="mb-md"
                 value={word}
-                onChange={(e) => setWord(e.target.value)}
-                placeholder='Слово на английском'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
+                placeholder="Слово на английском"
             />
             <Input
-                className='mb-md'
+                className="mb-md"
                 value={translation}
-                onChange={(e) => setTranslation(e.target.value)}
-                placeholder='Перевод'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTranslation(e.target.value)}
+                placeholder="Перевод"
             />
             <Input
-                className='mb-md'
+                className="mb-md"
                 value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder='Теги (через запятую)'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTags(e.target.value)}
+                placeholder="Теги (через запятую)"
             />
             <TextArea
-                className='mb-md'
+                className="mb-md"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder='Описание слова'
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                placeholder="Описание слова"
             />
 
             <div className={styles.buttons}>
