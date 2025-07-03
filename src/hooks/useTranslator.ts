@@ -1,44 +1,49 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { getTranslation } from '../api/translator';
 import useDictionary from './useDictionary';
-import {parseTags} from "../utils/parseTags";
+import { parseTags } from '../utils/parseTags';
+import { UseTranslatorResult } from '../types/hooks/useTranslator';
 
-const DEFAULT_LANGUAGE = 'ru-eng'
+const DEFAULT_LANGUAGE = 'ru-eng';
 
-export default function useTranslator() {
+export default function useTranslator(): UseTranslatorResult {
     const { addWord } = useDictionary();
 
     const [word, setWord] = useState('');
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [translations, setTranslations] = useState<string[]>([]);
-    const [tags, setTags] = useState<string>('');
+    const [tags, setTags] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [from, to] = language.split('-');
+    const [from, to] = useMemo(() => language.split('-'), [language]);
 
-    async function translate() {
+    const translate = useCallback(async () => {
         if (!word.trim()) return;
 
+        setLoading(true);
         try {
-            setLoading(true);
             const result = await getTranslation(word, from, to);
             setTranslations(result.translations ?? []);
-        } catch (error) {
-            console.error('Ошибка при переводе:', error);
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error('Ошибка при переводе:', err.message);
+            } else {
+                console.error('Неизвестная ошибка при переводе:', err);
+            }
         } finally {
             setLoading(false);
         }
-    }
+    }, [word, from, to]);
 
-    function saveWord() {
-        if (translations.length) {
-            addWord({
-                word,
-                translation: translations.join(', '),
-                tags: parseTags(tags),
-            });
-        }
-    }
+    const saveWord = useCallback(() => {
+        if (!translations.length) return;
+
+        addWord({
+            word,
+            translation: translations.join(', '),
+            tags: parseTags(tags),
+        });
+    }, [word, translations, tags, addWord]);
 
     return {
         word,
@@ -46,10 +51,10 @@ export default function useTranslator() {
         setWord,
         language,
         setLanguage,
+        setTags,
         translations,
         loading,
         translate,
         saveWord,
-        setTags
     };
 }

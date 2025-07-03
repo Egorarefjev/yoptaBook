@@ -1,61 +1,42 @@
+import { useState, useEffect } from 'react';
 import AddWordForm from '../../components/dictionary/AddWordForm';
 import ShowWordForm from '../../components/dictionary/ShowWordForm';
-import { useState, useEffect } from 'react';
 import useDictionary from '../../hooks/useDictionary';
+import useTags from '../../hooks/useTags';
+import LoaderMini from '../../components/ui/loaders/LoaderMini';
+import Select from '../../components/ui/select/Select';
+import { formatArrayToOptions } from '../../utils/formatForSelect';
+import { AddWordInput } from '../../types/words';
 import styles from './dictionary.module.scss';
-import LoaderMini from "../../components/ui/loaders/LoaderMini";
-import Select from "../../components/ui/select/Select";
-import { formatArrayToOptions } from "../../utils/formatForSelect";
 
 export default function DictionaryPage() {
-    const [wordInput, setWordInput] = useState('');
-    const [translateInput, setTranslateInput] = useState('');
-    const [descriptionInput, setDescriptionInput] = useState('');
-    const [tagsInput, setTagsInput] = useState('');
-    const [selectedTag, setSelectedTag] = useState('');
+    const [selectedTag, setSelectedTag] = useState<string>('');
 
     const {
         words,
         addWord,
         deleteWord,
-        loading,
-        error,
-        tags,
+        loadingWords,
+        errorWords,
         fetchWords,
-        fetchTags,
     } = useDictionary();
 
+    const {
+        tags,
+        loadingTags,
+        errorTags,
+        fetchTags,
+    } = useTags();
+
     useEffect(() => {
-        fetchWords(selectedTag);
+        void fetchWords(selectedTag);
     }, [selectedTag]);
 
     useEffect(() => {
-        fetchTags();
+        void fetchTags();
     }, [words]);
 
     const tagOptions = formatArrayToOptions(tags, true, 'Все слова');
-
-
-    const resetFields = () => {
-        setWordInput('');
-        setTranslateInput('');
-        setDescriptionInput('');
-    };
-
-    const saveWord = async () => {
-        if (!wordInput.trim() || !translateInput.trim()) return;
-        const tags = tagsInput.split(',');
-
-        await addWord({
-            word: wordInput.trim(),
-            translation: translateInput.trim(),
-            description: descriptionInput.trim(),
-            tags,
-        });
-
-        resetFields();
-    };
-
 
     return (
         <div className="container">
@@ -66,38 +47,41 @@ export default function DictionaryPage() {
                     Тут всё просто: вводишь слово, перевод и описание, жмакаешь "Добавить слово".
                 </p>
 
-                <AddWordForm
-                    onSubmit={addWord} />
+                <AddWordForm onSubmit={addWord} />
             </div>
+
             <div className={styles.tags}>
-                {tags.length > 1 && (
+                {tags.length > 0 && (
                     <Select
                         options={tagOptions}
                         value={selectedTag}
-                        onChange={e => setSelectedTag(e)}
-                        placeholder='Выберете тэг'
+                        onChange={setSelectedTag}
+                        placeholder="Выберите тэг"
                     />
                 )}
             </div>
-            {loading && <LoaderMini />}
 
-            {!loading && words?.length === 0 && (
+            {(loadingWords || loadingTags) && <LoaderMini />}
+
+            {!loadingWords && words.length === 0 && (
                 <div className={styles.empty}>
                     Пока слов нет. Добавь своё первое слово!
                 </div>
             )}
 
-            {!loading && words?.length > 0 && words.map((word) => (
-                <ShowWordForm
-                    key={word.id}
-                    word={word.word}
-                    translation={word.translation}
-                    description={word.description}
-                    tags={word.tags}
-                    onClickTag={setSelectedTag}
-                    deleteWord={() => deleteWord(word.id)}
-                />
-            ))}
+            {!loadingWords &&
+                words.map((word) => (
+                    <ShowWordForm
+                        key={word.id}
+                        word={word.word}
+                        translation={word.translation}
+                        description={word.description}
+                        tags={word.tags}
+                        onClickTag={setSelectedTag}
+                        deleteWord={() => deleteWord(word.id)}
+                    />
+                ))}
         </div>
     );
 }
+
