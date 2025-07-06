@@ -1,4 +1,4 @@
-import styles from './TranslatorForm.module.scss';
+import styles from './input.module.scss';
 import { InputProps } from '../../../types/ui';
 
 export default function Input({

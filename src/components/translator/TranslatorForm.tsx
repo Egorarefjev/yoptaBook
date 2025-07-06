@@ -1,7 +1,6 @@
 import Input from "../ui/input/Input";
 import Select from "../ui/select/Select";
 import styles from './TranslatorForm.module.scss';
-import { InputProps } from '../../types/ui';
 
 export default function TranslatorForm({
                                            onChange,
@@ -9,7 +8,6 @@ export default function TranslatorForm({
                                            word,
                                            languagesList,
                                            selectedLanguage,
-                                           translate
                                            }) {
 
 
@@ -20,12 +18,6 @@ export default function TranslatorForm({
                 placeholder='Введите слово'
                 className='mb-sm'
                 onChange={onChange}
-            />
-            <Input
-                value={translate}
-                placeholder='Перевод'
-                className='mb-sm'
-                disabled={true}
             />
 
             <div className={styles.select}>
