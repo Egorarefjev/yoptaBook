@@ -1,20 +1,24 @@
 import { useState } from 'react';
-import Input from '../ui/input/Input';
+import Input from "../ui/input/Input";
 import TextArea from '../ui/textarea/Textarea';
-import Button from '../ui/button/Button';
+import Button from "../ui/button/Button";
 import styles from './AddWordForm.module.scss';
-import { parseTags } from '../../utils/parseTags';
+import { parseTags } from "../../utils/parseTags";
 import { AddWordInput } from '../../types/words';
+import { Status } from "../../types/statuses";
 
-interface AddWordFormProps {
-    onSubmit: (word: AddWordInput) => void;
+type AddWordFormProps = {
+    onSubmit: (data: AddWordInput) => void;
+    onResult?: (status: Status) => void;
 }
 
-export default function AddWordForm({ onSubmit }: AddWordFormProps) {
-    const [word, setWord] = useState<string>('');
-    const [translation, setTranslation] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [tags, setTags] = useState<string>('');
+
+export default function AddWordForm({ onSubmit, onResult }: AddWordFormProps) {
+    const [word, setWord] = useState('');
+    const [translation, setTranslation] = useState('');
+    const [description, setDescription] = useState('');
+    const [tags, setTags] = useState('');
+    const [status, setStatus] = useState<'success' | 'error' | null>(null);
 
     const resetForm = () => {
         setWord('');
@@ -23,45 +27,52 @@ export default function AddWordForm({ onSubmit }: AddWordFormProps) {
         setTags('');
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!word.trim() || !translation.trim()) return;
 
-        const payload: AddWordInput = {
-            word: word.trim(),
-            translation: translation.trim(),
-            description: description.trim(),
-            tags: parseTags(tags),
-        };
+        try {
+            await onSubmit({
+                word: word.trim(),
+                translation: translation.trim(),
+                description: description.trim(),
+                tags: parseTags(tags),
+            });
+            setStatus(Status.Success);
+            onResult?.(Status.Success);
+            resetForm();
+        } catch {
+            setStatus(Status.Error);
+            onResult?.(Status.Error);
+        }
 
-        onSubmit(payload);
-        resetForm();
+        setTimeout(() => setStatus(null), 1500);
     };
 
     return (
         <div>
             <Input
-                className="mb-md"
+                className='mb-md'
                 value={word}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWord(e.target.value)}
-                placeholder="Слово на английском"
+                onChange={(e) => setWord(e.target.value)}
+                placeholder='Слово на английском'
             />
             <Input
-                className="mb-md"
+                className='mb-md'
                 value={translation}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTranslation(e.target.value)}
-                placeholder="Перевод"
+                onChange={(e) => setTranslation(e.target.value)}
+                placeholder='Перевод'
             />
             <Input
-                className="mb-md"
+                className='mb-md'
                 value={tags}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTags(e.target.value)}
-                placeholder="Теги (через запятую)"
+                onChange={(e) => setTags(e.target.value)}
+                placeholder='Теги (через запятую)'
             />
             <TextArea
-                className="mb-md"
+                className='mb-md'
                 value={description}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
-                placeholder="Описание слова"
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder='Описание слова'
             />
 
             <div className={styles.buttons}>

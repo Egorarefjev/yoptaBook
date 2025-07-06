@@ -5,6 +5,7 @@ import useTranslator from '../../hooks/useTranslator';
 import { LANGUAGES_LIST } from '../../helpers/consts';
 import LoaderMini from "../../components/ui/loaders/LoaderMini";
 import { NotificationService } from '../../services/notificationService';
+import {Status} from "../../types/statuses";
 
 
 export default function Translator() {
@@ -14,8 +15,6 @@ export default function Translator() {
         setWord,
         language,
         setLanguage,
-        tags,
-        setTags,
         translations,
         loading,
         translate,
@@ -25,9 +24,9 @@ export default function Translator() {
     const handleSave = async () => {
         try {
             await saveWord();
-            NotificationService.notify(`Слово "${word}" добавлено!`, 'success');
+            NotificationService.notify(`Слово "${word}" добавлено!`, Status.Success);
         } catch (e) {
-            NotificationService.notify('Не удалось сохранить слово', 'error');
+            NotificationService.notify('Не удалось сохранить слово', Status.Error);
         }
     };
 
@@ -39,9 +38,7 @@ export default function Translator() {
             <TranslatorForm
                 onChange={(e) => setWord(e.target.value)}
                 onChangeSelect={(e) => setLanguage(e)}
-                onChangeTags={(e) => setTags(e)}
                 word={word}
-                tags={tags}
                 languagesList={LANGUAGES_LIST}
                 selectedLanguage={language}
             />

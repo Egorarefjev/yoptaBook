@@ -1,14 +1,14 @@
-type Notification = {
-    id: string;
-    message: string;
-    type?: 'success' | 'error' | 'info';
-};
+import { NotificationType } from "../types/ui";
+import { Status } from "../types/statuses";
 
-type Listener = (notifications: Notification[]) => void;
+type Listener = (notifications: NotificationType[]) => void;
 
-let notifications: Notification[] = [];
+let notifications: NotificationType[] = [];
 let listeners = new Set<Listener>();
 let idCounter = 0;
+
+// Константа для времени жизни уведомления
+const NOTIFICATION_LIFETIME = 3000; // в миллисекундах
 
 export const NotificationService = {
     subscribe(listener: Listener): () => void {
@@ -19,14 +19,22 @@ export const NotificationService = {
         };
     },
 
-    notify(message: string, type: Notification['type'] = 'info') {
+    notify(message: string, type: Status.Success | Status.Error | Status.Info) {
         const id = String(++idCounter);
-        notifications = [...notifications, { id, message, type }];
+
+        const newNotification: NotificationType = {
+            id,
+            message,
+            type,
+        };
+
+        notifications = [...notifications, newNotification];
         notifyAll();
+
         setTimeout(() => {
             notifications = notifications.filter((n) => n.id !== id);
             notifyAll();
-        }, 3000);
+        }, NOTIFICATION_LIFETIME);
     },
 };
 
