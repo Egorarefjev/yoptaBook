@@ -39,6 +39,7 @@ export default function Translator() {
                 onChange={(e) => setWord(e.target.value)}
                 onChangeSelect={(e) => setLanguage(e)}
                 word={word}
+                translate={translate}
                 languagesList={LANGUAGES_LIST}
                 selectedLanguage={language}
             />

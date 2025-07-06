@@ -1,13 +1,14 @@
-import styles from './input.module.scss';
+import styles from './TranslatorForm.module.scss';
+import { InputProps } from '../../../types/ui';
 
 export default function Input({
                                   type = 'text',
                                   placeholder = '',
                                   value = '',
-                                  className= '',
+                                  className = '',
                                   onChange,
-                                  disabled = false}) {
-
+                                  disabled = false
+                              }: InputProps) {
     return (
         <div className={className}>
             <input
@@ -16,7 +17,8 @@ export default function Input({
                 placeholder={placeholder}
                 className={styles.input}
                 value={value}
-                disabled={disabled}/>
+                disabled={disabled}
+            />
         </div>
-    )
+    );
 }

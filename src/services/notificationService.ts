@@ -7,8 +7,7 @@ let notifications: NotificationType[] = [];
 let listeners = new Set<Listener>();
 let idCounter = 0;
 
-// Константа для времени жизни уведомления
-const NOTIFICATION_LIFETIME = 3000; // в миллисекундах
+const NOTIFICATION_LIFETIME = 3000;
 
 export const NotificationService = {
     subscribe(listener: Listener): () => void {
