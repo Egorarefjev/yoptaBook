@@ -1,13 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
 import { getTranslation } from '../api/translator';
-import useDictionary from './useDictionary';
 import { UseTranslatorResult } from '../types/hooks/useTranslator';
 
 const DEFAULT_LANGUAGE = 'ru-eng';
 
 export default function useTranslator(): UseTranslatorResult {
-    const { addWord } = useDictionary();
-
     const [word, setWord] = useState('');
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [translations, setTranslations] = useState<string[]>([]);
@@ -33,14 +30,10 @@ export default function useTranslator(): UseTranslatorResult {
         }
     }, [word, from, to]);
 
-    const saveWord = useCallback(() => {
-        if (!translations.length) return;
-
-        addWord({
-            word,
-            translation: translations.join(', '),
-        });
-    }, [word, translations, addWord]);
+    const translation = useMemo(
+        () => translations.join(', '),
+        [translations]
+    );
 
     return {
         word,
@@ -48,8 +41,8 @@ export default function useTranslator(): UseTranslatorResult {
         language,
         setLanguage,
         translations,
+        translation,
         loading,
         translate,
-        saveWord,
     };
 }

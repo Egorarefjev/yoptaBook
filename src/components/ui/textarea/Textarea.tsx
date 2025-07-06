@@ -3,9 +3,10 @@ import React from 'react';
 
 type TextareaProps = {
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     placeholder?: string;
     className?: string;
+    readOnly?: boolean
 };
 
 export default function Textarea({
@@ -13,6 +14,7 @@ export default function Textarea({
                                      onChange,
                                      placeholder = '',
                                      className = '',
+                                     readOnly = false
                                  }: TextareaProps) {
     return (
         <div className={className}>
@@ -21,6 +23,7 @@ export default function Textarea({
               value={value}
               onChange={onChange}
               placeholder={placeholder}
+              readOnly={readOnly}
           />
         </div>
     );

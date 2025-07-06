@@ -4,7 +4,7 @@ export interface UseTranslatorResult {
     language: string;
     setLanguage: (value: string) => void;
     translations: string[];
+    translation: string;
     loading: boolean;
     translate: () => Promise<void>;
-    saveWord: () => void;
 }

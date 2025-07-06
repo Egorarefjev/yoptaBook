@@ -1,6 +1,8 @@
 import Input from "../ui/input/Input";
 import Select from "../ui/select/Select";
 import styles from './TranslatorForm.module.scss';
+import Textarea from "../ui/textarea/Textarea";
+import LoaderMini from '../ui/loaders/LoaderMini'
 
 export default function TranslatorForm({
                                            onChange,
@@ -8,6 +10,8 @@ export default function TranslatorForm({
                                            word,
                                            languagesList,
                                            selectedLanguage,
+                                           translation,
+                                           loading
                                            }) {
 
 
@@ -19,6 +23,18 @@ export default function TranslatorForm({
                 className='mb-sm'
                 onChange={onChange}
             />
+            {loading ? (
+                <div className={styles.translationBox}>
+                    <LoaderMini />
+                </div>
+            ) : (
+                <Textarea
+                    value={translation}
+                    placeholder="Перевод"
+                    className="mb-sm"
+                    readOnly
+                />
+            )}
 
             <div className={styles.select}>
                 <Select
