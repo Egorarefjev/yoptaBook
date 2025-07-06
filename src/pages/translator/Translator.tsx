@@ -3,65 +3,56 @@ import TranslatorForm from "../../components/translator/TranslatorForm";
 import styles from './translator.module.scss';
 import useTranslator from '../../hooks/useTranslator';
 import { LANGUAGES_LIST } from '../../helpers/consts';
-import LoaderMini from "../../components/ui/loaders/LoaderMini";
 import { NotificationService } from '../../services/notificationService';
-import {Status} from "../../types/statuses";
-
+import { Status } from "../../types/statuses";
+import useDictionary from "../../hooks/useDictionary";
 
 export default function Translator() {
-
     const {
         word,
         setWord,
         language,
         setLanguage,
-        translations,
+        translation,
         loading,
         translate,
-        saveWord
     } = useTranslator();
 
+    const { addWord } = useDictionary();
+
     const handleSave = async () => {
+        if (!translation.trim() || !word.trim()) return;
+
         try {
-            await saveWord();
+            await addWord({
+                word: word.trim(),
+                translation: translation.trim(),
+                tags: [], // без тегов
+            });
             NotificationService.notify(`Слово "${word}" добавлено!`, Status.Success);
         } catch (e) {
             NotificationService.notify('Не удалось сохранить слово', Status.Error);
         }
     };
 
-
-
     return (
         <div className="container">
             <div className="title title--h2 mb-md">Переводчик</div>
+
             <TranslatorForm
                 onChange={(e) => setWord(e.target.value)}
-                onChangeSelect={(e) => setLanguage(e)}
+                onChangeSelect={setLanguage}
                 word={word}
                 languagesList={LANGUAGES_LIST}
+                translation={translation}
                 selectedLanguage={language}
+                loading={loading}
             />
 
-            <div>
-                {loading ? (
-                    <LoaderMini/>
-                ) : (
-                    translations.length > 0 && (
-                        <>
-                            <div className="title title--h2">Перевод</div>
-                            {translations.map((t, index) => (
-                                <p key={index}>{t}</p>
-                            ))}
-                        </>
-                    )
-                )}
-            </div>
-
             <div className={styles.buttons}>
-                <Button onClick={handleSave}>Сохранить в словарь</Button>
+                <Button onClick={handleSave} disabled={!translation}>Сохранить в словарь</Button>
                 <Button onClick={translate} loading={loading}>Перевести</Button>
             </div>
         </div>
-    )
+    );
 }
