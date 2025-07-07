@@ -5,6 +5,7 @@ export interface ShowWordFormProps {
     translation: string;
     description?: string | null;
     tags?: string[] | null;
+    isShowTranslate: boolean;
     deleteWord: () => void;
     onClickTag?: (tag: string) => void;
 }
@@ -14,6 +15,7 @@ export default function ShowWordForm({
                                          translation,
                                          description,
                                          tags,
+                                         isShowTranslate = true,
                                          deleteWord,
                                          onClickTag,
                                      }: ShowWordFormProps) {
@@ -21,8 +23,15 @@ export default function ShowWordForm({
         <div className={styles['word-card']}>
             <div className={styles['word-header']}>
                 <div className={styles['word__title']}>{word}</div>
-                <span className={styles['word__translation']}>({translation})</span>
+                <span
+                    className={`${styles['word__translation']} ${
+                        isShowTranslate ? styles['visible'] : styles['hidden']
+                    }`}
+                >
+                    ({translation})
+                </span>
             </div>
+
 
             {(tags && tags.length > 0) && (
                 <div className={styles.tags}>

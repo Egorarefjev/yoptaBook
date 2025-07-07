@@ -1,9 +1,10 @@
 import { Status } from "./statuses";
 
-export type SelectOptionType = {
+export type OptionType = {
     label: string;
     value: string;
 };
+
 
 export type NotificationType = {
     id: string;
@@ -19,3 +20,18 @@ export type InputProps = {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     disabled?: boolean;
 };
+
+export interface RadioGroupProps {
+    options: OptionType[];
+    value: string;
+    onChange: (value: string) => void;
+    className?: string;
+}
+
+export interface CheckboxProps {
+    label?: string;
+    checked: boolean;
+    onChange: (checked: boolean) => void;
+    className?: string;
+    disabled?: boolean;
+}

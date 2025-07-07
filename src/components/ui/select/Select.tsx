@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './select.module.scss';
-import { SelectOptionType } from '../../../types/ui'
+import { OptionType } from '../../../types/ui'
 
 
 type SelectProps = {
-    options: SelectOptionType[];
+    options: OptionType[];
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
