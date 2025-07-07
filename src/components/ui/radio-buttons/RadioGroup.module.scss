@@ -1,0 +1,41 @@
+.group {
+  display: flex;
+  gap: var(--spacer-sm);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.radio input {
+  display: none;
+}
+
+.custom {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-text);
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+}
+
+.radio input:checked + .custom::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-text);
+  border-radius: 50%;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}

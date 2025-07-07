@@ -9,13 +9,14 @@ import Select from '../../components/ui/select/Select';
 import { formatArrayToOptions } from '../../utils/formatForSelect';
 import styles from './dictionary.module.scss';
 import Button from "../../components/ui/button/Button";
-import {NotificationService} from "../../services/notificationService";
-import {Status} from "../../types/statuses";
+import { NotificationService } from "../../services/notificationService";
+import { Status } from "../../types/statuses";
+import ToggleSwitch from "../../components/ui/checkboxes/ToggleSwitch";
 
 export default function DictionaryPage() {
     const [selectedTag, setSelectedTag] = useState<string>('');
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
+    const [isShowTranslate, setIsShowTranslate] = useState<boolean>(false);
 
     const {
         words,
@@ -71,6 +72,11 @@ export default function DictionaryPage() {
                 </Modal>
             </div>
             <div className={styles.tags}>
+                <ToggleSwitch
+                    checked={isShowTranslate}
+                    label="Показывать перевод"
+                    onChange={() => {setIsShowTranslate(!isShowTranslate)}}
+                />
                 {tags.length > 0 && (
                     <Select
                         options={tagOptions}
@@ -97,6 +103,7 @@ export default function DictionaryPage() {
                         translation={word.translation}
                         description={word.description}
                         tags={word.tags}
+                        isShowTranslate={isShowTranslate}
                         onClickTag={setSelectedTag}
                         deleteWord={() => deleteWord(word.id)}
                     />

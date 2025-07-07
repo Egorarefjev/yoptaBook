@@ -33,7 +33,27 @@
   background-color: var(--color-hover);
   padding: 2px 8px;
   border-radius: var(--radius-sm);
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease, max-width 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-width: 300px;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(-5px);
+  max-width: 0;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
 
 .tags {
   display: flex;
