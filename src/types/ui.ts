@@ -35,3 +35,13 @@ export interface CheckboxProps {
     className?: string;
     disabled?: boolean;
 }
+
+export interface NavItem {
+    label: string;
+    to: string;
+}
+
+export interface NavListProps {
+    navItems: NavItem[];
+    className?: string;
+}
