@@ -6,5 +6,26 @@
 .main {
   flex: 1;
   padding: var(--spacer-lg);
-  margin-left: 240px;
+  @media (min-width: 768px) {
+    margin-left: 300px;
+  }
+}
+
+.burger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  backdrop-filter: blur(10px);
+  background-color: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 1.5rem;
+  z-index: 999;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 }
