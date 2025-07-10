@@ -1,17 +1,46 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import NavBar from '../components/NavBar';
+import type { NavItem } from '../types/ui';
+import styles from './MainTemplate.module.scss';
+import { ROUTES } from '../routes/constants.js';
+import { useAuth } from '../context/AuthContext';
+import Icon from "./ui/icons/Icon";
+
+const NAV_ITEMS: NavItem[] = [
+    { label: 'Словарь', to: ROUTES.DICTIONARY },
+    { label: 'Переводчик', to: ROUTES.TRANSLATOR },
+    { label: 'О проекте', to: ROUTES.ABOUT }
+];
 
 export default function MainTemplate() {
-    return (
-        <div className="main-template">
-            <Header />
+    const { isAuth } = useAuth();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-            <main className="main-template__content">
+    const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
+    const closeSidebar = () => setIsSidebarOpen(false);
+
+    return (
+        <div className={styles.layout}>
+            {isAuth && (
+                <>
+                    {!isSidebarOpen &&
+                        <button className={styles.burger} onClick={toggleSidebar}>
+                            <Icon name='menu' size={24} />
+                        </button>
+                    }
+                    <NavBar
+                        navItems={NAV_ITEMS}
+                        isOpen={isSidebarOpen}
+                        onClose={closeSidebar}
+                    />
+                </>
+            )}
+
+            <main className={styles.main}>
                 <Outlet />
             </main>
-
-            <Footer />
         </div>
     );
 }
+

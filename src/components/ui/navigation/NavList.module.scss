@@ -1,0 +1,46 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1rem 0;
+}
+
+.link {
+  position: relative;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: background 0.2s, color 0.2s;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: var(--color-text);
+  }
+}
+
+.active {
+  color: var(--color-primary);
+  background-color: rgba(98, 84, 243, 0.08);
+}
+
+.indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.active .indicator {
+  opacity: 1;
+  transform: scale(1);
+}

@@ -1,0 +1,74 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #f5f5ff;
+  background-image: radial-gradient(circle, rgba(99,102,241,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--spacer-md);
+  transition: transform 0.3s ease;
+  z-index: 100;
+
+  @media (max-width: 768px) {
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+      width: 100%;
+      z-index: 22;
+      background-color: var(--color-background);
+    }
+  }
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-md);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: var(--spacer-xxl);
+
+  img {
+    width: 120px;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-sm);
+  align-items: center;
+}
+
+.footerButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.copyright {
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.toggleButton {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  z-index: 101;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
