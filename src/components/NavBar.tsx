@@ -3,6 +3,7 @@ import styles from './NavBar.module.scss';
 import Button from '../components/ui/button/Button';
 import type { NavItem } from '../types/ui';
 import { useAuth } from '../context/AuthContext';
+import Icon from "./ui/icons/Icon";
 
 interface NavBarProps {
     navItems: NavItem[];
@@ -20,10 +21,7 @@ export default function NavBar({ navItems, isOpen = true, onClose }: NavBarProps
                 onClick={onClose}
                 aria-label="Close sidebar"
             >
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                    <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="2" />
-                    <line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" strokeWidth="2" />
-                </svg>
+                <Icon name='close' size={24} />
             </button>
 
             <div className={styles.top}>

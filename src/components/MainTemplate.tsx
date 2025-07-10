@@ -5,6 +5,7 @@ import type { NavItem } from '../types/ui';
 import styles from './MainTemplate.module.scss';
 import { ROUTES } from '../routes/constants.js';
 import { useAuth } from '../context/AuthContext';
+import Icon from "./ui/icons/Icon";
 
 const NAV_ITEMS: NavItem[] = [
     { label: 'Словарь', to: ROUTES.DICTIONARY },
@@ -25,7 +26,7 @@ export default function MainTemplate() {
                 <>
                     {!isSidebarOpen &&
                         <button className={styles.burger} onClick={toggleSidebar}>
-                            ☰
+                            <Icon name='menu' size={24} />
                         </button>
                     }
                     <NavBar

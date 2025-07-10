@@ -45,3 +45,9 @@ export interface NavListProps {
     navItems: NavItem[];
     className?: string;
 }
+
+export interface IconProps {
+    name: string;
+    size?: number; // в px
+    className?: string;
+}
