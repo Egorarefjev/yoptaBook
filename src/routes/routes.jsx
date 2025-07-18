@@ -3,6 +3,8 @@ import DictionaryPage from '../pages/dictionary/DictionaryPage';
 import About from "../pages/about/About.js";
 import Translator from "../pages/translator/Translator";
 import Lessons from '../pages/lessons/Lessons';
+import LessonCategory from "../pages/lessons/LessonCategory.js";
+import LessonPage from "../pages/lessons/LessonPage.js";
 
 import PrivateRoute from '../components/routes/PrivateRoute';
 import PublicRoute from '../components/routes/PublicRoute';
@@ -46,6 +48,22 @@ export const appRoutes = [
         element: (
             <PrivateRoute>
                 <Lessons />
+            </PrivateRoute>
+        ),
+    },
+    {
+        path: `${ROUTES.LESSONS}/:category`,
+        element: (
+            <PrivateRoute>
+                <LessonCategory />
+            </PrivateRoute>
+        ),
+    },
+    {
+        path: `${ROUTES.LESSONS}/:category/:slug`,
+        element: (
+            <PrivateRoute>
+                <LessonPage />
             </PrivateRoute>
         ),
     },

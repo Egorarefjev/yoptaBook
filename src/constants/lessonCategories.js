@@ -1,31 +1,31 @@
 export const LESSON_CATEGORIES = [
     {
-        slug: 'tenses',
+        slug: 'Tenses',
         title: 'Времена',
         icon: '⏳',
     },
     {
-        slug: 'grammar',
+        slug: 'Grammar',
         title: 'Грамматика',
         icon: '📘',
     },
     {
-        slug: 'vocabulary',
+        slug: 'Vocabulary',
         title: 'Лексика',
         icon: '🧠',
     },
     {
-        slug: 'speaking',
+        slug: 'Speaking',
         title: 'Разговорная речь',
         icon: '🗣️',
     },
     {
-        slug: 'writing',
+        slug: 'Writing',
         title: 'Письмо',
         icon: '✍️',
     },
     {
-        slug: 'phrasal-verbs',
+        slug: 'Phrasal-verbs',
         title: 'Фразовые глаголы',
         icon: '🔗',
     }
