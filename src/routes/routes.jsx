@@ -3,6 +3,7 @@ import DictionaryPage from '../pages/dictionary/DictionaryPage';
 import Result from '../pages/Result';
 import About from "../pages/about/About.js";
 import Translator from "../pages/translator/Translator";
+import Lessons from '../pages/lessons/Lessons';
 
 import PrivateRoute from '../components/routes/PrivateRoute';
 import PublicRoute from '../components/routes/PublicRoute';
@@ -42,10 +43,10 @@ export const appRoutes = [
         ),
     },
     {
-        path: ROUTES.RESULT,
+        path: ROUTES.LESSONS,
         element: (
             <PrivateRoute>
-                <Result />
+                <Lessons />
             </PrivateRoute>
         ),
     },
