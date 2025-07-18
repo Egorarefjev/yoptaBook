@@ -1,9 +1,11 @@
 import { useState, useCallback } from 'react';
 import { apiGetLessonsByCategory, apiGetLesson } from '../api/lessons';
+import { Lesson } from "../types/lessons";
+import { UseLessonsHook } from "../types/hooks/useLessons";
 
-export default function useLessons() {
-    const [lessonsByCategory, setLessonsByCategory] = useState<object[]>([]);
-    const [lesson, setLesson] = useState<object>([]);
+export default function useLessons():UseLessonsHook {
+    const [lessonsByCategory, setLessonsByCategory] = useState<Lesson[]>([]);
+    const [lesson, setLesson] = useState<Lesson | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
