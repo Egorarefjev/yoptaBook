@@ -8,3 +8,4 @@ export const LANGUAGES_LIST = [
         value: 'eng-ru',
     },
 ]
+

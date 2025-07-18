@@ -2,7 +2,7 @@ import Button from "../../components/ui/button/Button";
 import TranslatorForm from "../../components/translator/TranslatorForm";
 import styles from './translator.module.scss';
 import useTranslator from '../../hooks/useTranslator';
-import { LANGUAGES_LIST } from '../../helpers/consts';
+import { LANGUAGES_LIST } from '../../constants/languages';
 import { NotificationService } from '../../services/notificationService';
 import { Status } from "../../types/statuses";
 import useDictionary from "../../hooks/useDictionary";
