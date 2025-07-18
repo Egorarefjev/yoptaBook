@@ -1,0 +1,11 @@
+.example {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacer-sm);
+}
+
+.note {
+  color: var(--color-muted);
+  font-style: italic;
+  margin-bottom: var(--spacer-sm);
+}
