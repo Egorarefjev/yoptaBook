@@ -24,13 +24,18 @@ export default function LessonCategory() {
                     {category}
                 </div>
                 <div className={styles.contentGrid}>
-                    { lessonsByCategory && (
-                        lessonsByCategory.map((lesson) => {
-                            return <CategoryCard
+                    {lessonsByCategory.length > 0 ? (
+                        lessonsByCategory.map((lesson) => (
+                            <CategoryCard
                                 key={lesson.id}
                                 title={lesson.title}
-                                onClickAction={()=>openLesson(lesson.slug)}/>
-                        })
+                                onClickAction={() => openLesson(lesson.slug)}
+                            />
+                        ))
+                    ) : (
+                        <div>
+                            Пока нет уроков по этой теме
+                        </div>
                     )}
                 </div>
             </div>

@@ -5,7 +5,7 @@ import Translator from "../pages/translator/Translator";
 import Lessons from '../pages/lessons/Lessons';
 import LessonCategory from "../pages/lessons/LessonCategory.js";
 import LessonPage from "../pages/lessons/LessonPage.js";
-
+import LessonsLayout from '../components/LessonsLayout';
 import PrivateRoute from '../components/routes/PrivateRoute';
 import PublicRoute from '../components/routes/PublicRoute';
 import { ROUTES } from './constants';
@@ -47,24 +47,22 @@ export const appRoutes = [
         path: ROUTES.LESSONS,
         element: (
             <PrivateRoute>
-                <Lessons />
+                <LessonsLayout />
             </PrivateRoute>
         ),
-    },
-    {
-        path: `${ROUTES.LESSONS}/:category`,
-        element: (
-            <PrivateRoute>
-                <LessonCategory />
-            </PrivateRoute>
-        ),
-    },
-    {
-        path: `${ROUTES.LESSONS}/:category/:slug`,
-        element: (
-            <PrivateRoute>
-                <LessonPage />
-            </PrivateRoute>
-        ),
-    },
+        children: [
+            {
+                index: true,
+                element: <Lessons />,
+            },
+            {
+                path: ':category',
+                element: <LessonCategory />,
+            },
+            {
+                path: ':category/:slug',
+                element: <LessonPage />,
+            },
+        ]
+    }
 ];

@@ -1,0 +1,22 @@
+.breadcrumbs {
+  margin-bottom: var(--spacer-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-right: var(--spacer-xs);
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--color-heading);
+    }
+  }
+
+  span {
+    margin-right: var(--spacer-xs);
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+  }
+}
