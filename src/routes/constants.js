@@ -3,5 +3,6 @@ export const ROUTES = {
     DICTIONARY: '/dictionary',
     RESULT: '/result',
     ABOUT: '/about',
-    TRANSLATOR: '/translator'
+    TRANSLATOR: '/translator',
+    LESSONS: '/lessons',
 };

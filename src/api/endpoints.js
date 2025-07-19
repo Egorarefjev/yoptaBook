@@ -4,5 +4,6 @@ export const API_ENDPOINTS = {
     DICTIONARY: '/dictionary',
     WORDS: '/words',
     TAGS: '/words/tags',
-    ME: '/me'
+    ME: '/me',
+    LESSONS: '/lessons'
 };

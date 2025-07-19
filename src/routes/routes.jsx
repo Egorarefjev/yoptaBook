@@ -1,9 +1,11 @@
 import Login from '../pages/login/Login';
 import DictionaryPage from '../pages/dictionary/DictionaryPage';
-import Result from '../pages/Result';
 import About from "../pages/about/About.js";
 import Translator from "../pages/translator/Translator";
-
+import Lessons from '../pages/lessons/Lessons';
+import LessonCategory from "../pages/lessons/LessonCategory.js";
+import LessonPage from "../pages/lessons/LessonPage.js";
+import LessonsLayout from '../components/LessonsLayout';
 import PrivateRoute from '../components/routes/PrivateRoute';
 import PublicRoute from '../components/routes/PublicRoute';
 import { ROUTES } from './constants';
@@ -42,11 +44,25 @@ export const appRoutes = [
         ),
     },
     {
-        path: ROUTES.RESULT,
+        path: ROUTES.LESSONS,
         element: (
             <PrivateRoute>
-                <Result />
+                <LessonsLayout />
             </PrivateRoute>
         ),
-    },
+        children: [
+            {
+                index: true,
+                element: <Lessons />,
+            },
+            {
+                path: ':category',
+                element: <LessonCategory />,
+            },
+            {
+                path: ':category/:slug',
+                element: <LessonPage />,
+            },
+        ]
+    }
 ];

@@ -10,7 +10,8 @@ import Icon from "./ui/icons/Icon";
 const NAV_ITEMS: NavItem[] = [
     { label: 'Словарь', to: ROUTES.DICTIONARY },
     { label: 'Переводчик', to: ROUTES.TRANSLATOR },
-    { label: 'О проекте', to: ROUTES.ABOUT }
+    { label: 'Уроки', to: ROUTES.LESSONS },
+    { label: 'О проекте', to: ROUTES.ABOUT },
 ];
 
 export default function MainTemplate() {

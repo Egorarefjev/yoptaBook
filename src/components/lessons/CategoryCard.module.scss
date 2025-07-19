@@ -1,0 +1,23 @@
+.card {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacer-lg);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 4px 4px 0 var(--color-border);
+  user-select: none;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 6px 6px 0 var(--color-hover);
+    background-color: var(--color-hover);
+  }
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-heading);
+}
