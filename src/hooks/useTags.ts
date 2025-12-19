@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { apiGetTags } from '../api/dictionary';
+import {  apiGetTags } from '../api/dictionary';
 import { UseTagsResult } from '../types/hooks/useTags'
 
 export default function useTags(): UseTagsResult {
@@ -7,12 +7,12 @@ export default function useTags(): UseTagsResult {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchTags = useCallback(async () => {
+    const fetchTags = useCallback(async (isArchive:boolean) => {
         setLoading(true);
         setError(null);
 
         try {
-            const data = await apiGetTags();
+            const data = await apiGetTags(isArchive);
             setTags(data);
         } catch (err) {
             if (err instanceof Error) {

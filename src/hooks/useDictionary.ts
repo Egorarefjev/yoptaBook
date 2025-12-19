@@ -4,9 +4,11 @@ import {
     apiGetWordsByTag,
     apiCreateWord,
     apiDeleteWord,
+    apiGetArchiveWords,
+    apiUpdateWord,
 } from '../api/dictionary';
-import { Word, AddWordInput } from '../types/words';
-import { UseDictionaryResult } from '../types/hooks/useDictionary'
+import {Word, AddWordInput, UpdateWordInput} from '../types/words';
+import { UseDictionaryResult } from '../types/hooks/useDictionary';
 
 
 export default function useDictionary(): UseDictionaryResult {
@@ -16,15 +18,20 @@ export default function useDictionary(): UseDictionaryResult {
 
     const latestFetchId = useRef(0);
 
-    const fetchWords = useCallback(async (tag = '') => {
+    const fetchWords = useCallback(async (tag = '', is_archived: boolean = false) => {
         const currentFetchId = ++latestFetchId.current;
         setLoadingWords(true);
         setErrorWords(null);
 
         try {
-            const data = tag
-                ? await apiGetWordsByTag(tag)
-                : await apiGetWords();
+            let data = [];
+            if (is_archived) {
+                data = await apiGetArchiveWords();
+            } else {
+                data = tag
+                    ? await apiGetWordsByTag(tag)
+                    : await apiGetWords();
+            }
 
             if (currentFetchId === latestFetchId.current) {
                 setWords(data);
@@ -75,6 +82,22 @@ export default function useDictionary(): UseDictionaryResult {
         }
     }, []);
 
+    const updateWord = useCallback(
+        async (id: number, data: UpdateWordInput) => {
+            try {
+                const response = await apiUpdateWord(id, data);
+                const updatedWord = response.word;
+                setWords((currentWords) =>
+                    currentWords.map((word) =>
+                        word.id === updatedWord.id ? updatedWord : word
+                    )
+                );
+            } catch (error) {
+                setErrorWords('Не удалось обновить слово');
+            }
+        }, []);
+
+
     return {
         words,
         loadingWords,
@@ -82,5 +105,6 @@ export default function useDictionary(): UseDictionaryResult {
         fetchWords,
         addWord,
         deleteWord,
+        updateWord
     };
 }
