@@ -59,14 +59,22 @@ export default function DictionaryPage() {
     }
 
     const archiveWord = async (id:number, is_archive:boolean) => {
-       await updateWord(id, {is_archived: is_archive});
+        try {
+            await updateWord(id, {is_archived: is_archive});
+            NotificationService.notify(is_archive ? `Слово добавлено в архив!` : 'Слово вернулось в словарь', Status.Success);
+        } catch (error) {
+            NotificationService.notify(`Произошла ошибка`, Status.Error);
+        }
+
        void fetchWords(selectedTag ?? selectedTag, isShowArchive);
     }
 
     return (
         <div className="container">
             <div className={styles.header}>
-                <div className="title title--h2 mb-md">Словарь</div>
+                <div className="title title--h2 mb-md">
+                    {isShowArchive ? 'Архив' : 'Словарь'}
+                </div>
                 <div className={styles.buttons}>
                     <Button onClick={() => setIsOpenModal(!isOpenModal)}>+ Добавить слово</Button>
                     <Button
@@ -125,6 +133,7 @@ export default function DictionaryPage() {
                         translation={word.translation}
                         description={word.description}
                         tags={word.tags}
+                        isArchived={word.is_archived}
                         isShowTranslate={isShowTranslate}
                         onClickTag={setSelectedTag}
                         deleteWord={() => deleteWord(word.id)}

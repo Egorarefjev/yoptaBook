@@ -1,5 +1,5 @@
 import styles from './showWordForm.module.scss';
-import { X, Archive } from 'lucide-react';
+import { X, Archive, ArchiveRestore } from 'lucide-react';
 
 
 export interface ShowWordFormProps {
@@ -11,6 +11,7 @@ export interface ShowWordFormProps {
     deleteWord: () => void;
     onClickTag?: (tag: string) => void;
     archiveWord: () => void;
+    isArchived?: boolean
 }
 
 export default function ShowWordForm({
@@ -22,6 +23,7 @@ export default function ShowWordForm({
                                          deleteWord,
                                          onClickTag,
                                          archiveWord,
+                                         isArchived
                                      }: ShowWordFormProps) {
     return (
         <div className={styles['word-card']}>
@@ -57,12 +59,18 @@ export default function ShowWordForm({
 
             <div className={styles['buttons']}>
                 <div onClick={archiveWord} className={styles['buttons__button']}>
-                    <Archive
-                        size={16}
-                        strokeWidth={1.75}
-                    />
-                </div>
+                    {isArchived ?
+                        <ArchiveRestore
+                            size={16}
+                            strokeWidth={1.75}
+                        />
+                        : <Archive
+                            size={16}
+                            strokeWidth={1.75}
+                        />
 
+                    }
+                </div>
                 <div onClick={deleteWord} className={styles['buttons__button']}>
                     <X
                         size={16}
