@@ -12,11 +12,13 @@ import Button from "../../components/ui/button/Button";
 import { NotificationService } from "../../services/notificationService";
 import { Status } from "../../types/statuses";
 import ToggleSwitch from "../../components/ui/checkboxes/ToggleSwitch";
+import {Archive} from "lucide-react";
 
 export default function DictionaryPage() {
     const [selectedTag, setSelectedTag] = useState<string>('');
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
     const [isShowTranslate, setIsShowTranslate] = useState<boolean>(false);
+    const [isShowArchive, setIsShowArchive] = useState<boolean>(false);
 
     const {
         words,
@@ -24,22 +26,26 @@ export default function DictionaryPage() {
         deleteWord,
         loadingWords,
         fetchWords,
+        updateWord,
     } = useDictionary();
 
     const {
         tags,
         loadingTags,
-        errorTags,
         fetchTags,
     } = useTags();
 
     useEffect(() => {
-        void fetchWords(selectedTag);
-    }, [selectedTag]);
+        void fetchWords(selectedTag, isShowArchive);
+    }, [selectedTag, isShowArchive]);
 
     useEffect(() => {
-        void fetchTags();
-    }, [words]);
+        void fetchTags(isShowArchive);
+    }, [words, isShowArchive]);
+
+    useEffect(() => {
+        setSelectedTag('');
+    }, [isShowArchive]);
 
     const tagOptions = formatArrayToOptions(tags, true, 'Все слова');
 
@@ -52,11 +58,27 @@ export default function DictionaryPage() {
         }
     }
 
+    const archiveWord = async (id:number, is_archive:boolean) => {
+       await updateWord(id, {is_archived: is_archive});
+       void fetchWords(selectedTag ?? selectedTag, isShowArchive);
+    }
+
     return (
         <div className="container">
             <div className={styles.header}>
                 <div className="title title--h2 mb-md">Словарь</div>
-                <Button onClick={() => setIsOpenModal(!isOpenModal)}>+ Добавить слово</Button>
+                <div className={styles.buttons}>
+                    <Button onClick={() => setIsOpenModal(!isOpenModal)}>+ Добавить слово</Button>
+                    <Button
+                        onClick={() => setIsShowArchive(!isShowArchive)}
+                        type={isShowArchive ? 'primary' : 'secondary'}
+                    >
+                        <Archive
+                            size={16}
+                            strokeWidth={1.75}
+                        />
+                    </Button>
+                </div>
             </div>
 
             <div className="mb-sm">
@@ -106,6 +128,7 @@ export default function DictionaryPage() {
                         isShowTranslate={isShowTranslate}
                         onClickTag={setSelectedTag}
                         deleteWord={() => deleteWord(word.id)}
+                        archiveWord={() => archiveWord(word.id, !word.is_archived )}
                     />
                 ))}
         </div>

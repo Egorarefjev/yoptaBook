@@ -1,4 +1,6 @@
 import styles from './showWordForm.module.scss';
+import { X, Archive } from 'lucide-react';
+
 
 export interface ShowWordFormProps {
     word: string;
@@ -8,6 +10,7 @@ export interface ShowWordFormProps {
     isShowTranslate: boolean;
     deleteWord: () => void;
     onClickTag?: (tag: string) => void;
+    archiveWord: () => void;
 }
 
 export default function ShowWordForm({
@@ -18,6 +21,7 @@ export default function ShowWordForm({
                                          isShowTranslate = true,
                                          deleteWord,
                                          onClickTag,
+                                         archiveWord,
                                      }: ShowWordFormProps) {
     return (
         <div className={styles['word-card']}>
@@ -51,8 +55,20 @@ export default function ShowWordForm({
                 <p className={styles['word__description']}>{description}</p>
             )}
 
-            <div onClick={deleteWord} className={styles['close-button']}>
-                X
+            <div className={styles['buttons']}>
+                <div onClick={archiveWord} className={styles['buttons__button']}>
+                    <Archive
+                        size={16}
+                        strokeWidth={1.75}
+                    />
+                </div>
+
+                <div onClick={deleteWord} className={styles['buttons__button']}>
+                    <X
+                        size={16}
+                        strokeWidth={1.75}
+                    />
+                </div>
             </div>
         </div>
     );

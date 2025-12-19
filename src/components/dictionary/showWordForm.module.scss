@@ -84,18 +84,23 @@
   margin-bottom: var(--spacer-sm);
 }
 
-.close-button {
+.buttons {
   position: absolute;
   top: var(--spacer-sm);
   right: var(--spacer-sm);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   color: var(--color-muted);
   cursor: pointer;
-  opacity: 0.6;
   transition: opacity 0.2s, color 0.2s;
-
-  &:hover {
-    opacity: 1;
-    color: var(--color-danger);
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--spacer-xxs);
+  &__button {
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+      color: var(--color-danger);
+    }
   }
 }

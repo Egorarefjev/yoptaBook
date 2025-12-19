@@ -1,9 +1,13 @@
+const WORDS = '/words';
+
 export const API_ENDPOINTS = {
     LOGIN: '/login',
     REGISTER: '/register',
-    DICTIONARY: '/dictionary',
-    WORDS: '/words',
-    TAGS: '/words/tags',
     ME: '/me',
-    LESSONS: '/lessons'
+
+    DICTIONARY: '/dictionary',
+    LESSONS: '/lessons',
+
+    WORDS,
+    WORDS_TAGS: `${WORDS}/tags`,
 };
