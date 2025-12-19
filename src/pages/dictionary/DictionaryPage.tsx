@@ -12,13 +12,16 @@ import Button from "../../components/ui/button/Button";
 import { NotificationService } from "../../services/notificationService";
 import { Status } from "../../types/statuses";
 import ToggleSwitch from "../../components/ui/checkboxes/ToggleSwitch";
-import {Archive} from "lucide-react";
+import { Archive } from "lucide-react";
+import {AddWordInput, Word} from "../../types/words"
 
 export default function DictionaryPage() {
     const [selectedTag, setSelectedTag] = useState<string>('');
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+    const [isOpenModalAddWord, setIsOpenModalAddWord] = useState<boolean>(false);
+    const [isOpenModalUpdateWord, setIsOpenModalUpdateWord] = useState<boolean>(false);
     const [isShowTranslate, setIsShowTranslate] = useState<boolean>(false);
     const [isShowArchive, setIsShowArchive] = useState<boolean>(false);
+    const [editedWord, setEditedWord] = useState<Word | null>(null);
 
     const {
         words,
@@ -49,11 +52,31 @@ export default function DictionaryPage() {
 
     const tagOptions = formatArrayToOptions(tags, true, 'Все слова');
 
-    const onResultAddWord = (status) => {
-        if (status === Status.Success) {
-            setIsOpenModal(!isOpenModal);
-            NotificationService.notify(`Слово добавлено!`, Status.Success);
+    const onClickOpenUpdateWord = (word:Word) => {
+        setEditedWord(word);
+        setIsOpenModalUpdateWord(!isOpenModalUpdateWord);
+    }
+
+    const onClickUpdateWord = async (data:AddWordInput) => {
+        if (editedWord?.id) {
+            try {
+                await updateWord(editedWord.id, data);
+                setIsOpenModalUpdateWord(false);
+                NotificationService.notify(`Слово отредактировано!`, Status.Success);
+            } catch (e) {
+                NotificationService.notify(`Произошла ошибка`, Status.Error);
+            }
         } else {
+            NotificationService.notify(`Слово не найдено`, Status.Error);
+        }
+    }
+
+    const onClickAddWord = async (data:AddWordInput) => {
+        try {
+            await addWord(data);
+            setIsOpenModalAddWord(false);
+            NotificationService.notify(`Слово добавлено!`, Status.Success);
+        } catch (e) {
             NotificationService.notify(`Произошла ошибка`, Status.Error);
         }
     }
@@ -76,7 +99,7 @@ export default function DictionaryPage() {
                     {isShowArchive ? 'Архив' : 'Словарь'}
                 </div>
                 <div className={styles.buttons}>
-                    <Button onClick={() => setIsOpenModal(!isOpenModal)}>+ Добавить слово</Button>
+                    <Button onClick={() => setIsOpenModalAddWord(!isOpenModalAddWord)}>+ Добавить слово</Button>
                     <Button
                         onClick={() => setIsShowArchive(!isShowArchive)}
                         type={isShowArchive ? 'primary' : 'secondary'}
@@ -87,19 +110,6 @@ export default function DictionaryPage() {
                         />
                     </Button>
                 </div>
-            </div>
-
-            <div className="mb-sm">
-                <Modal
-                    isOpen={isOpenModal}
-                    onClose={() => setIsOpenModal(!isOpenModal)}
-                    title="Создание слова"
-                >
-                    <AddWordForm
-                        onSubmit={addWord}
-                        onResult={(status) => onResultAddWord(status)}
-                    />
-                </Modal>
             </div>
             <div className={styles.tags}>
                 <ToggleSwitch
@@ -136,10 +146,36 @@ export default function DictionaryPage() {
                         isArchived={word.is_archived}
                         isShowTranslate={isShowTranslate}
                         onClickTag={setSelectedTag}
+                        onClickUpdate={() => onClickOpenUpdateWord(word)}
                         deleteWord={() => deleteWord(word.id)}
                         archiveWord={() => archiveWord(word.id, !word.is_archived )}
                     />
                 ))}
+
+            <div>
+                <Modal
+                    isOpen={isOpenModalUpdateWord}
+                    onClose={() => setIsOpenModalUpdateWord(!isOpenModalUpdateWord)}
+                    title="Редактирование слова"
+                >
+                    <AddWordForm
+                        editedWord={editedWord}
+                        onReset={() => setIsOpenModalUpdateWord(!isOpenModalUpdateWord)}
+                        onSubmit={onClickUpdateWord}
+                        submitButtonText='Изменить слово'
+                        resetButtonText='Отмена'
+                    />
+                </Modal>
+                <Modal
+                    isOpen={isOpenModalAddWord}
+                    onClose={() => setIsOpenModalAddWord(!isOpenModalAddWord)}
+                    title="Создание слова"
+                >
+                    <AddWordForm
+                        onSubmit={onClickAddWord}
+                    />
+                </Modal>
+            </div>
         </div>
     );
 }

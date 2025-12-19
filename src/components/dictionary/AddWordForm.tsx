@@ -1,24 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from "../ui/input/Input";
 import TextArea from '../ui/textarea/Textarea';
 import Button from "../ui/button/Button";
 import styles from './AddWordForm.module.scss';
 import { parseTags } from "../../utils/parseTags";
-import { AddWordInput } from '../../types/words';
-import { Status } from "../../types/statuses";
+import { AddWordInput, Word } from '../../types/words';
+import {stringifyTags} from "../../utils/stringifyTags";
 
 type AddWordFormProps = {
+    editedWord?: Word | null;
     onSubmit: (data: AddWordInput) => void;
-    onResult?: (status: Status) => void;
+    onReset?: () => void;
+    submitButtonText?: string;
+    resetButtonText?: string;
 }
 
 
-export default function AddWordForm({ onSubmit, onResult }: AddWordFormProps) {
+export default function AddWordForm({ onSubmit, onReset, editedWord, submitButtonText, resetButtonText }: AddWordFormProps) {
     const [word, setWord] = useState('');
     const [translation, setTranslation] = useState('');
     const [description, setDescription] = useState('');
     const [tags, setTags] = useState('');
-    const [status, setStatus] = useState<'success' | 'error' | null>(null);
+
+    useEffect(() => {
+        setWord(editedWord?.word ?? '');
+        setTranslation(editedWord?.translation ?? '');
+        setDescription(editedWord?.description ?? '');
+        setTags(editedWord?.tags ? stringifyTags(editedWord.tags) : '');
+    }, [editedWord]);
 
     const resetForm = () => {
         setWord('');
@@ -27,26 +36,25 @@ export default function AddWordForm({ onSubmit, onResult }: AddWordFormProps) {
         setTags('');
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit =  () => {
         if (!word.trim() || !translation.trim()) return;
-
-        try {
-            await onSubmit({
+            onSubmit({
                 word: word.trim(),
                 translation: translation.trim(),
                 description: description.trim(),
                 tags: parseTags(tags),
             });
-            setStatus(Status.Success);
-            onResult?.(Status.Success);
             resetForm();
-        } catch {
-            setStatus(Status.Error);
-            onResult?.(Status.Error);
-        }
+    }
 
-        setTimeout(() => setStatus(null), 1500);
-    };
+    const onClickReset = () => {
+        if (typeof onReset === "function") {
+            onReset()
+        } else {
+            resetForm()
+        }
+    }
+
 
     return (
         <div>
@@ -76,9 +84,10 @@ export default function AddWordForm({ onSubmit, onResult }: AddWordFormProps) {
             />
 
             <div className={styles.buttons}>
-                <Button onClick={resetForm}>Очистить</Button>
-                <Button onClick={handleSubmit}>Добавить слово</Button>
+                <Button type='secondary' onClick={onClickReset}>{resetButtonText ? resetButtonText : 'Очистить'}</Button>
+                <Button onClick={handleSubmit}>{submitButtonText ? submitButtonText : 'Добавить слово'}</Button>
             </div>
         </div>
     );
 }
+
