@@ -49,7 +49,7 @@ export default function Login() {
 
     return (
         <div className={`${styles.wrapper} container`}>
-            <div className={styles.title}>Добро пожаловать! <HeartIcon/> </div>
+            <div className={styles.title}>Добро пожаловать!</div>
 
             <div className="mb-md">
                 <div className={`${styles.subtitle} mb-md`}>
