@@ -1,4 +1,4 @@
-import styles from './categoryCard.module.scss';
+import styles from './CategoryCard.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
