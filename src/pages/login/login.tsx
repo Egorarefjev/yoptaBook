@@ -4,6 +4,7 @@ import Input from '../../components/ui/input/Input';
 import UiError from '../../components/ui/Error/Error';
 import styles from './login.module.scss';
 import { useAuth } from '../../context/AuthContext';
+import {HeartIcon} from "lucide-react";
 
 export default function Login() {
     const [loginInput, setLoginInput] = useState('');
@@ -48,7 +49,7 @@ export default function Login() {
 
     return (
         <div className={`${styles.wrapper} container`}>
-            <div className={styles.title}>Добро пожаловать!</div>
+            <div className={styles.title}>Добро пожаловать! <HeartIcon/> </div>
 
             <div className="mb-md">
                 <div className={`${styles.subtitle} mb-md`}>
