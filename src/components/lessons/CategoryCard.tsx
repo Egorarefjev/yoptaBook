@@ -15,4 +15,3 @@ export default function CategoryCard({ title, onClickAction }: Props) {
         </div>
     );
 }
-
