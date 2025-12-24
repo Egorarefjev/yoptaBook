@@ -1,4 +1,4 @@
-import Login from '../pages/login/Login';
+import Login from '../pages/login/login';
 import DictionaryPage from '../pages/dictionary/DictionaryPage';
 import About from "../pages/about/About.js";
 import Translator from "../pages/translator/Translator";
