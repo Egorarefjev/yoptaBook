@@ -12,6 +12,14 @@
   }
 }
 
+.word-card__archive {
+  background-color: var(--secondary-color);
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .word-header {
   display: flex;
   justify-content: space-between;
