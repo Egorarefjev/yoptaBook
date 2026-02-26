@@ -1,11 +1,11 @@
 export const LANGUAGES_LIST = [
     {
         label: 'Русский => английский',
-        value: 'ru-eng',
+        value: 'ru-en',
     },
     {
         label: 'Английский => русский',
-        value: 'eng-ru',
+        value: 'en-ru',
     },
 ]
 

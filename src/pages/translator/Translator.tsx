@@ -6,19 +6,39 @@ import { LANGUAGES_LIST } from '../../constants/languages';
 import { NotificationService } from '../../services/notificationService';
 import { Status } from "../../types/statuses";
 import useDictionary from "../../hooks/useDictionary";
+import useLanguage from "../../hooks/useLanguage";
+import useEnrich from "../../hooks/useEnrich";
+import { useState } from 'react';
 
 export default function Translator() {
+    const [word, setWord] = useState<string>("");
+
     const {
-        word,
-        setWord,
         language,
         setLanguage,
+        from,
+        to
+    } = useLanguage();
+
+    const {
         translation,
         loading,
         translate,
     } = useTranslator();
 
+    const {
+        enrich
+    } = useEnrich();
+
     const { addWord } = useDictionary();
+
+    const handleEnrich = async () => {
+       void enrich(word, from, to);
+    }
+
+    const handleTranslate = async () => {
+        void translate(word, from, to);
+    }
 
     const handleSave = async () => {
         if (!translation.trim() || !word.trim()) return;
@@ -27,7 +47,6 @@ export default function Translator() {
             await addWord({
                 word: word.trim(),
                 translation: translation.trim(),
-                tags: [], // без тегов
             });
             NotificationService.notify(`Слово "${word}" добавлено!`, Status.Success);
         } catch (e) {
@@ -51,7 +70,8 @@ export default function Translator() {
 
             <div className={styles.buttons}>
                 <Button onClick={handleSave} disabled={!translation}>Сохранить в словарь</Button>
-                <Button onClick={translate} loading={loading}>Перевести</Button>
+                <Button onClick={handleEnrich} disabled={!word}>Обогатить </Button>
+                <Button onClick={handleTranslate} loading={loading}>Перевести</Button>
             </div>
         </div>
     );
