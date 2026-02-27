@@ -105,7 +105,7 @@ function buildCardsQueryParams(filters) {
     if (filters.archived === true) params.archived = "1";
     if (filters.archived === false) params.archived = "0";
     if (filters.tag) params.tag = filters.tag;
-    if (filters.q) params.q = filters.q;
+    if (filters.search) params.search = filters.search;
 
     return params;
 }
