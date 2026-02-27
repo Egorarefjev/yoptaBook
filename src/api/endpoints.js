@@ -8,8 +8,6 @@ export const API_ENDPOINTS = {
     ENRICH: '/llmTranslator',
     DICTIONARY: '/dictionary',
     LESSONS: '/lessons',
-
-    WORDS,
-    WORDS_TAGS: `${WORDS}/tags`,
-
+    LOOKUP: '/lookup',
+    CARDS: '/cards',
 };

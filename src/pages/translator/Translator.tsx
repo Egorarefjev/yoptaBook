@@ -1,6 +1,4 @@
-import Button from "../../components/ui/button/Button";
-import TranslatorForm from "../../components/translator/TranslatorForm";
-import styles from './translator.module.scss';
+
 import useTranslator from '../../hooks/useTranslator';
 import { LANGUAGES_LIST } from '../../constants/languages';
 import { NotificationService } from '../../services/notificationService';
@@ -9,6 +7,11 @@ import useDictionary from "../../hooks/useDictionary";
 import useLanguage from "../../hooks/useLanguage";
 import useEnrich from "../../hooks/useEnrich";
 import { useState } from 'react';
+import Button from "../../components/ui/button/Button";
+import TranslatorForm from "../../components/translator/TranslatorForm";
+import EnrichForm from "../../components/translator/EnrichForm";
+import styles from './translator.module.scss';
+
 
 export default function Translator() {
     const [word, setWord] = useState<string>("");
@@ -27,7 +30,9 @@ export default function Translator() {
     } = useTranslator();
 
     const {
-        enrich
+        enrich,
+        cardEnrich,
+        loadingEnrich
     } = useEnrich();
 
     const { addWord } = useDictionary();
@@ -73,6 +78,8 @@ export default function Translator() {
                 <Button onClick={handleEnrich} disabled={!word}>Обогатить </Button>
                 <Button onClick={handleTranslate} loading={loading}>Перевести</Button>
             </div>
+
+            <EnrichForm cardEnrich={cardEnrich} loading={loadingEnrich} />
         </div>
     );
 }

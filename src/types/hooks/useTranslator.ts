@@ -1,5 +1,5 @@
 export interface UseTranslatorResult {
     translation: string;
     loading: boolean;
-    translate: () => Promise<void>;
+    translate: (word: string, from: string, to: string) => Promise<void>;
 }
